@@ -45,8 +45,8 @@ const Webtone = () => {
         <main class="container mx-auto mb-28 min-h-screen max-w-6xl">
             <section class="flex w-full flex-col items-center justify-center">
                 <section class="m-12 w-2/3  text-neutral-800">
-                    <h1 class={h1}>WEBTONE</h1>
-                    <p class="italic">17 Maj 2024</p>
+                    <h1 class={h1}>WEBTONE v0.81</h1>
+                    <p class="italic">May 17, 2024</p>
                     <p class={p}>
                         WEBTONE is a digital first color system with 2880 curated colors for digital displays. Currently
                         in development, it is published for feedback and reference purposes.
