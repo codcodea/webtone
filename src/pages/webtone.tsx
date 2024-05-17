@@ -1,10 +1,8 @@
-
 import webtone from "../assets/webtones.json"
 import { For, createSignal, onMount, Show } from "solid-js"
 import { Portal } from "solid-js/web"
 
 const Webtone = () => {
-
     let portal: HTMLDivElement
     const [chips, setChips] = createSignal(webtone)
     const [chip, setChip] = createSignal({})
@@ -16,8 +14,8 @@ const Webtone = () => {
 
     const h1 = "text-4xl font-bold mb-4"
     const h2 = "text-2xl font-bold mt-6"
-    const p = "mt-2 text-base"
-    const li = "mt-2 text-base"
+    const p = "mt-2 text-lg"
+    const li = "mt-2 text-lg"
 
     const handleClick = (e) => {
         const wrapper = e.target.closest(".chip")
@@ -35,8 +33,8 @@ const Webtone = () => {
                 }
             })
 
-            console.log(a)  
-            const b =  a[0].lab.map((lab) => lab.toPrecision(4))
+            console.log(a)
+            const b = a[0].lab.map((lab) => lab.toPrecision(4))
             a[0].labString = `L: ${b[0]}, a: ${b[1]}, b: ${b[2]}`
 
             setChip(a)
@@ -48,6 +46,7 @@ const Webtone = () => {
             <section class="flex w-full flex-col items-center justify-center">
                 <section class="m-12 w-2/3  text-neutral-800">
                     <h1 class={h1}>WEBTONE</h1>
+                    <p class="italic">17 Maj 2024</p>
                     <p class={p}>
                         WEBTONE is a digital first color system with 2880 curated colors for digital displays. Currently
                         in development, it is published for feedback and reference purposes.
@@ -55,15 +54,14 @@ const Webtone = () => {
                     <h2 class={h2}>Purpose</h2>
                     <p class={p}>
                         While Pantone, NCS, and RAL dominate color systems for physical materials, WEBTONE aims to
-                        pioneer as a digital-first color system meticulously optimized for digital displays.
+                        pioneer as a digital-first color system optimized for digital displays.
                     </p>
 
                     <h2 class={h2}>Goals</h2>
                     <ul class="mt-4 list-inside list-disc space-y-2">
                         <li class={li}>
                             <b>Extensive Curated Palette:</b> Offering a curated selection of colors that go beyond
-                            basic CSS names like "LightPink" and "AliceBlue", ensuring versatility and aesthetic harmony
-                            in digital design.
+                            basic CSS names like "LightPink" and "AliceBlue".
                         </li>
                         <li class={li}>
                             <b>Open Source and Community Driven</b>: Embracing open-source principles, WEBTONE invites
@@ -89,7 +87,7 @@ const Webtone = () => {
                             compatibility extending to sRGB and future-ready P3-display support.
                         </li>
 
-                        <li>
+                        <li class={li}>
                             <b>Integration with Design Software:</b> Provide free swatches and plugins for popular
                             design software like Adobe Creative Suite, Figma, Sketch, and more.
                         </li>
@@ -103,16 +101,19 @@ const Webtone = () => {
                         </li>
                     </ul>
 
-                    <h2 class={h2}>Feedback</h2>
+                    <h2 class={h2}>Feedback and Contribution </h2>
                     <p class={p}>
-                        WEBTONE is a dynamic project actively seeking input from the design community. Your feedback is
-                        invaluable in shaping and enhancing the system. Please share your thoughts and suggestions to
-                        help us refine and improve WEBTONE.
+                        At this time, WEBTONE is just an idea. We are looking for feedback and contributions from the
+                        design community to shape and refine this color system. If you have suggestions, feedback, or
+                        would like to contribute, please reach out to us at{" "}
+                        <a href="https://github.com/codcodea/webtone" class="text-blue-600 underline">
+                            GitHub
+                        </a>
                     </p>
                 </section>
             </section>
 
-            <section onClick={handleClick} class="flex w-full flex-col items-center justify-center">
+            <section onClick={handleClick} class="flex w-full flex-col items-center justify-center mt-16">
                 <For each={webtone}>
                     {(hue, index) => {
                         return (
@@ -133,12 +134,14 @@ const Webtone = () => {
                 <Portal>
                     <section
                         ref={portal}
-                        class="fixed left-[50%] top-[50%] z-50 -translate-x-1/2 -translate-y-1/2 transform px-6 shadow-xl w-4/5 h-3/5 flex justify-center items-center bg-white border border-neutral-300"
+                        class="fixed left-[50%] top-[50%] z-50 flex h-3/5 w-4/5 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center border border-neutral-300 bg-white px-6 shadow-xl"
                     >
                         <button
                             class="absolute bottom-6 right-6 z-20 h-6 w-16 border-neutral-200 text-sm uppercase shadow"
                             style={{ "background-color": "rgba(0,0,0,0.5)" }}
-                            onClick={() => {setPortal(false)}}
+                            onClick={() => {
+                                setPortal(false)
+                            }}
                         >
                             <span class="z-30 select-none text-xs uppercase tracking-wide text-white opacity-100">
                                 Close
@@ -146,16 +149,16 @@ const Webtone = () => {
                         </button>
 
                         <div class={"flex items-center justify-center"}>
-                            <div class="h-96 w-96 border border-neutral-500 shadow-lg flex flex-col">
+                            <div class="flex h-96 w-96 flex-col border border-neutral-500 shadow-lg">
                                 <div
-                                    class="flex-1 w-full p-2  text-neutral-900 flex flex-col items-center justify-center"
-                                    style={{ "background-color": chip()[0]?.rgbString}}
+                                    class="flex w-full flex-1  flex-col items-center justify-center p-2 text-neutral-900"
+                                    style={{ "background-color": chip()[0]?.rgbString }}
                                 >
                                     <p class="text-lg">{chip()[0]?.rgbString}</p>
                                     <p class="text-lg">{chip()[0]?.oklch}</p>
                                     <p class="text-lg">{chip()[0]?.labString} </p>
                                 </div>
-                                <div class="h-1/4 w-full bg-white py-3 px-6 text-neutral-900 flex flex-col justify-center">
+                                <div class="flex h-1/4 w-full flex-col justify-center bg-white px-6 py-3 text-neutral-900">
                                     <p class="text-lg">WEBTONE</p>
                                     <p class="text-lg">{chip()[0]?.name}</p>
                                 </div>

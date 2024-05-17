@@ -3,7 +3,7 @@ export default {
 	content: ["./src/index.html", "./src/index.tsx", "./src/**/*.{html,tsx,ts}"],
 	theme: {
 		fontFamily: {
-			sans: ["Times", "sans-serif"],
+			sans: ["sans-serif"],
 		},
 		extend: {},
 	},
