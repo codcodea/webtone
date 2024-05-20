@@ -45,7 +45,7 @@ const Webtone = () => {
         <main class="container mx-auto mb-28 min-h-screen max-w-6xl">
             <section class="flex w-full flex-col items-center justify-center">
                 <section class="m-12 w-2/3  text-neutral-800">
-                    <h1 class={h1}>WEBTONE v0.81</h1>
+                    <h1 class={h1}>WEBTONE v0.811</h1>
                     <p class="italic">May 17, 2024</p>
                     <p class={p}>
                         WEBTONE is a digital first color system with 2880 curated colors for digital displays. Currently
@@ -60,60 +60,73 @@ const Webtone = () => {
                     <h2 class={h2}>Goals</h2>
                     <ul class="mt-4 list-inside list-disc space-y-2">
                         <li class={li}>
-                            <b>Extensive Curated Palette:</b> Offering a curated selection of colors that go beyond
+                            <b>Digital-First Design: </b> WEBTONE is tailored specifically for digital media, addressing
+                            the unique challenges of color representation on screens.
+                        </li>
+                        <li class={li}>
+                            <b>Extensive Curated Palettes:</b> Offering a curated selection of colors that go beyond
                             basic CSS names like "LightPink" and "AliceBlue".
                         </li>
                         <li class={li}>
-                            <b>Open Source and Community Driven</b>: Embracing open-source principles, WEBTONE invites
-                            community contributions and feedback to evolve and refine its color palette continuously.
+                            <b>Community Driven and Open Source</b>: WEBTONE is a free, open-source and community-driven
+                            project.
                         </li>
                         <li class={li}>
-                            <b>Modern Naming Convention:</b> Implementing a contemporary naming convention that
-                            resonates with digital design trends and usability.
+                            <b>Naming Convention:</b> Implement a contemporary naming convention.
                         </li>
                         <li class={li}>
-                            <b>Optimized for Digital Displays and Future CSS Standards:</b> Prioritizing colors
-                            optimized for digital displays, with an eye towards evolving CSS standards like CSS 4-5 for
-                            enhanced color representation.
+                            <b>Optimized for Evolving Standards::</b> Prioritizing colors optimized for digital
+                            displays, with an eye towards evolving CSS standards like CSS 4-5 for enhanced color
+                            representation.
                         </li>
 
                         <li class={li}>
                             <b>Accessibility by Design:</b> Ensuring colors meet accessibility standards (e.g., WCAG
-                            compliance), facilitating inclusive design practices and enhancing readability and usability
-                            for all users.
+                            compliance).
                         </li>
                         <li class={li}>
-                            <b>Wide Gamut Support:</b> Encompassing a wide gamut of colors at its core, with
-                            compatibility extending to sRGB and future-ready P3-display support.
+                            <b>Wide Gamut Support:</b> Designed to support a wide gamut of colors, WEBTONE is compatible
+                            with both sRGB and P3 displays, making it future-proof and adaptable to the latest display
+                            technologies.
                         </li>
 
                         <li class={li}>
-                            <b>Integration with Design Software:</b> Provide free swatches and plugins for popular
-                            design software like Adobe Creative Suite, Figma, Sketch, and more.
+                            <b>Software Integration:</b> Provide free swatches and plugins for popular design software
+                            like Adobe Creative Suite, Figma, Sketch, and more.
                         </li>
                         <li class={li}>
-                            <b>CMYK Conversion Guidance:</b> Providing guidance on converting WEBTONE colors to CMYK for
-                            print, ensuring color consistency across digital and physical media.
+                            <b>CMYK Conversion Guidance:</b> Detailed guidelines for converting WEBTONE colors to CMYK
+                            ensure that digital designs maintain color fidelity when printed, bridging the gap between
+                            digital and physical media.
                         </li>
+
                         <li class={li}>
                             <b>Free to Use:</b> WEBTONE is freely available for use in any project, facilitating
-                            seamless integration into design workflows and codebases.{" "}
+                            seamless integration into design workflows and codebases.
                         </li>
                     </ul>
 
                     <h2 class={h2}>Feedback and Contribution </h2>
                     <p class={p}>
-                        At this time, WEBTONE is just an idea. We are looking for feedback and contributions from the
-                        design community to shape and refine this color system. If you have suggestions, feedback, or
-                        would like to contribute, please reach out to us at{" "}
-                        <a href="https://github.com/codcodea/webtone" class="text-blue-600 underline">
-                            GitHub
+                        At this time, WEBTONE is just an idea and draft, looking for input and collaborations. If you
+                        have suggestions, feedback, or would like to contribute, please reach out to us at{" "}
+                        <a
+                            href="https://github.com/codcodea/webtone/discussions/2"
+                            class="mt-4 block text-blue-600  underline"
+                        >
+                            GitHub Discussions
+                        </a>
+                        <a href="https://github.com/codcodea/webtone" class="block text-blue-600 underline">
+                            GitHub Repo
+                        </a>
+                        <a href="mailto:info@webtone.org" class="block text-blue-600 underline">
+                            info@webtone.org
                         </a>
                     </p>
                 </section>
             </section>
 
-            <section onClick={handleClick} class="flex w-full flex-col items-center justify-center mt-16">
+            <section onClick={handleClick} class="mt-16 flex w-full flex-col items-center justify-center">
                 <For each={webtone}>
                     {(hue, index) => {
                         return (
