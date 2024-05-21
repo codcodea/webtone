@@ -79,10 +79,10 @@ const Welcome = () => {
                     </a>
                 </p>
 
-                <h2 class={h2}>Color matching tests</h2>
+                <h2 class={h2}>Development tests</h2>
                 <p class={p}>
                     <a href="https://mycolorpicker.com" class="block text-blue-600 underline ">
-                        Color tool
+                        Color matching tool
                     </a>
                 </p>
 
