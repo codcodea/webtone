@@ -1,11 +1,11 @@
 const Welcome = () => {
     const h1 = "text-4xl font-bold mb-3"
     const h2 = "text-2xl font-bold mt-6"
-    const h3 = "mt-4 text-lg font-bold"
-    const p = "mt-2 text-lg"
+    const h3 = "mt-4 text-lg font-bold italic"
+    const p = "mt-3 text-lg"
     const li = "mt-2 text-lg"
     const span = "font-bold"
-    const a = "block text-blue-600 underline"
+
 
     return (
         <section class="flex w-full flex-col items-center justify-center">
@@ -79,7 +79,15 @@ const Welcome = () => {
                     </a>
                 </p>
 
-                <table class="mt-6 w-full text-left ">
+                <h2 class={h2}>Color matching tests</h2>
+                <p class={p}>
+                    <a href="https://mycolorpicker.com" class="block text-blue-600 underline ">
+                        Color tool
+                    </a>
+                </p>
+
+                <h2 class={h2}>Changelog</h2>
+                <table class="m-2 w-full text-left ">
                     <thead>
                         <tr>
                             <th class=" py-2">Version</th>
