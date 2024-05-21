@@ -10,9 +10,10 @@ const Webtone = () => {
 
     onMount(async () => {
         setChips(webtone)
+        console.log(chips())
     })
 
-    const h1 = "text-4xl font-bold mb-4"
+    const h1 = "text-4xl font-bold mb-3"
     const h2 = "text-2xl font-bold mt-6"
     const p = "mt-2 text-lg"
     const li = "mt-2 text-lg"
@@ -45,39 +46,36 @@ const Webtone = () => {
         <main class="container mx-auto mb-28 min-h-screen max-w-6xl">
             <section class="flex w-full flex-col items-center justify-center">
                 <section class="m-12 w-2/3  text-neutral-800">
-                    <h1 class={h1}>WEBTONE v0.811</h1>
-                    <p class="italic">May 17, 2024</p>
+                    <h1 class={h1}>WEBTONE</h1>
                     <p class={p}>
                         WEBTONE is a digital first color system with 2880 curated colors for digital displays. Currently
                         in development, it is published for feedback and reference purposes.
                     </p>
                     <h2 class={h2}>Purpose</h2>
                     <p class={p}>
-                        While Pantone, NCS, and RAL dominate color systems for physical materials, WEBTONE aims to
-                        pioneer as a digital-first color system optimized for digital displays.
+                        WEBTONE aims to provide a free-to-use color system optimized for digital displays.
                     </p>
-
-                    <h2 class={h2}>Goals</h2>
+                    <h2 class={h2}>Gaps and Objectives</h2>
+                    <p class={p}>
+                        Traditional color systems like Pantone, RAL, and NCS are primarily focused on physical media. A
+                        digital-first color system such as WEBTONE could offer several potential benefits:
+                    </p>
                     <ul class="mt-4 list-inside list-disc space-y-2">
                         <li class={li}>
                             <b>Digital-First Design: </b> WEBTONE is tailored specifically for digital media, addressing
                             the unique challenges of color representation on screens.
                         </li>
                         <li class={li}>
-                            <b>Extensive Curated Palettes:</b> Offering a curated selection of colors that go beyond
-                            basic CSS names like "LightPink" and "AliceBlue".
+                            <b>Community Driven</b>: WEBTONE is a free, open-source and community-driven project.
                         </li>
                         <li class={li}>
-                            <b>Community Driven and Open Source</b>: WEBTONE is a free, open-source and community-driven
-                            project.
+                            <b>Curated Palettes:</b> Providing a curated selection of colors to complement basic CSS
+                            names like "LightPink" and "AliceBlue," with a new naming convention.
                         </li>
+
                         <li class={li}>
-                            <b>Naming Convention:</b> Implement a contemporary naming convention.
-                        </li>
-                        <li class={li}>
-                            <b>Optimized for Evolving Standards::</b> Prioritizing colors optimized for digital
-                            displays, with an eye towards evolving CSS standards like CSS 4-5 for enhanced color
-                            representation.
+                            <b>Meet Evolving Standards:</b> Compatibility with evolving digital design standards and
+                            technologies like CSS 4-5.
                         </li>
 
                         <li class={li}>
@@ -95,9 +93,9 @@ const Webtone = () => {
                             like Adobe Creative Suite, Figma, Sketch, and more.
                         </li>
                         <li class={li}>
-                            <b>CMYK Conversion Guidance:</b> Detailed guidelines for converting WEBTONE colors to CMYK
-                            ensure that digital designs maintain color fidelity when printed, bridging the gap between
-                            digital and physical media.
+                            <b>Conversion Guidance:</b> Detailed guidelines for converting WEBTONE colors to CMYK ensure
+                            that digital designs maintain color fidelity when printed, bridging the gap between digital
+                            and physical media.
                         </li>
 
                         <li class={li}>
@@ -105,14 +103,13 @@ const Webtone = () => {
                             seamless integration into design workflows and codebases.
                         </li>
                     </ul>
-
                     <h2 class={h2}>Feedback and Contribution </h2>
                     <p class={p}>
                         At this time, WEBTONE is just an idea and draft, looking for input and collaborations. If you
                         have suggestions, feedback, or would like to contribute, please reach out to us at{" "}
                         <a
                             href="https://github.com/codcodea/webtone/discussions/2"
-                            class="mt-4 block text-blue-600  underline"
+                            class="mt-6 block text-blue-600  underline"
                         >
                             GitHub Discussions
                         </a>
@@ -123,6 +120,28 @@ const Webtone = () => {
                             info@webtone.org
                         </a>
                     </p>
+
+                    <table class="mt-12 w-full text-left">
+                        <thead>
+                            <tr>
+                                <th class=" py-2">Version</th>
+                                <th class=" py-2">Date</th>
+                                <th class=" py-2">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-t">
+                                <td class=" py-2 italic">v0.811</td>
+                                <td class=" py-2">May 17, 2024</td>
+                                <td class=" py-2">Initial</td>
+                            </tr>
+                            <tr class="border-t">
+                                <td class=" py-2 italic">v0.812</td>
+                                <td class=" py-2">May 21, 2024</td>
+                                <td class=" py-2">Prefix and color names.</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </section>
             </section>
 
@@ -131,10 +150,10 @@ const Webtone = () => {
                     {(hue, index) => {
                         return (
                             <section class="block w-11/12" data-palette={Math.floor(index())}>
-                                <h1 class="mt-6 text-left text-2xl">WEBTONE: {index()}</h1>
+                                <h1 class="mt-6 text-left text-2xl">WEBTONE - {hue.name}</h1>
                                 <article class="my-2 flex flex-row flex-wrap items-center gap-x-1">
-                                    <For each={hue}>
-                                        {(chip, i) => <WebtoneChip name={chip.name} rgb={chip.rgbString} i={index} />}
+                                    <For each={hue.arr}>
+                                        {(chip, i) => <WebtoneChip code={chip.code} rgb={chip.rgbString} i={index} />}
                                     </For>
                                 </article>
                             </section>
@@ -187,7 +206,7 @@ const Webtone = () => {
 export default Webtone
 
 type WebtoneChipProps = {
-    name: string
+    code: string
     rgb: string
     i: () => number
 }
@@ -196,7 +215,7 @@ const WebtoneChip = (props: WebtoneChipProps) => {
     return (
         <div
             class={
-                "chip mt-2 flex h-28 w-28 flex-col border transition-shadow duration-150 hover:scale-150 hover:border hover:shadow-lg"
+                "chip mt-2 flex h-40 w-28 flex-col border transition-shadow duration-150 hover:scale-150 hover:border hover:shadow-lg"
             }
             data-webtone={props.name}
             data-palette={Math.floor(props.i())}
@@ -207,9 +226,9 @@ const WebtoneChip = (props: WebtoneChipProps) => {
                     "background-color": props.rgb,
                 }}
             ></div>
-            <div class="flex h-1/3 flex-col items-start justify-center bg-white p-1">
+            <div class="flex h-12 flex-col items-start justify-center bg-white p-1">
                 <p class="text-[10px]">WEBTONE</p>
-                <p class="text-[10px]">{props.name}</p>
+                <p class="text-[10px]">{props.code}</p>
             </div>
         </div>
     )
