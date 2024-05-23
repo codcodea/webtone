@@ -2,6 +2,8 @@ import webtone from "../assets/webtones.json"
 import { For, createSignal, onMount, Show, createEffect } from "solid-js"
 import { Portal } from "solid-js/web"
 
+import { addColorLS, rmColorLS, isSelectedState } from "../lib/ls"
+
 import Welcome from "../components/welcome"
 
 type Webtone = {
@@ -11,18 +13,19 @@ type Webtone = {
         rgbString: string
         hex: string
         oklch: string
+        hsl: string
     }[]
 }[]
 
 const Webtone = () => {
     let portal: HTMLDivElement
-    const [chips, setChips] = createSignal(webtone)
-    const [chip, setChip] = createSignal<Webtone>(null)
+    const [chips, setChips] = createSignal<Webtone>(webtone)
+    const [active, setActive] = createSignal<Webtone>(null)
     const [isPortal, setPortal] = createSignal(false)
 
     onMount(async () => {
-
-        console.log(chips())
+        //console.log(chips())
+        
     })
 
     createEffect(() => {
@@ -40,6 +43,11 @@ const Webtone = () => {
     }
 
     const handleClick = (e) => {
+
+        const isCheckbox = e.target.tagName === "INPUT"
+        const isChecked = e.target.checked
+
+        // Find chip
         const grid = e.target.closest("section[data-palette]")
         const palette = grid.getAttribute("data-palette")
 
@@ -47,11 +55,22 @@ const Webtone = () => {
         const code = chip.getAttribute("data-webtone")
 
         const obj = chips()[palette].arr.find((chip) => chip.code == code)
-        setChip(obj)
-        setPortal(true)
+   
+        // Portal
+        setActive(obj)
+        !isCheckbox && setPortal(true)
+
+        // Local Storage
+        if (isChecked) {
+            addColorLS({ name : obj.code, color: obj.rgbString })
+        } else {
+            rmColorLS({ name : obj.code, color: obj.rgbString })
+            // TODO: remove clone from canvas
+
+        }
     }
     return (
-        <main class="container mx-auto mb-28 min-h-screen max-w-6xl">
+        <main class="container mx-auto mb-28 min-h-screen max-w-7xl">
             <Welcome />
             <section onClick={handleClick} class="mt-16 flex w-full flex-col items-center justify-center">
                 <For each={webtone}>
@@ -61,7 +80,7 @@ const Webtone = () => {
                                 <h1 class="mt-6 text-left text-2xl">WEBTONE - {hue.name}</h1>
                                 <article class="my-2 flex flex-row flex-wrap items-center gap-x-1">
                                     <For each={hue.arr}>
-                                        {(chip, i) => <WebtoneChip code={chip.code} rgb={chip.rgbString} i={index} />}
+                                        {(chip, i) => <WebtoneChip code={chip.code} rgb={chip.rgbString} i={index} isChecked={chip.isChecked}/>}
                                     </For>
                                 </article>
                             </section>
@@ -88,19 +107,32 @@ const Webtone = () => {
                             </span>
                         </button>
 
+                        <button
+                            class="absolute bottom-6 right-24 z-20 h-6 w-16 border-neutral-200 text-sm uppercase shadow"
+                            style={{ "background-color": "rgba(0,0,0,0.5)" }}
+                            onClick={(e) => {
+                                e.target.closest("button").classList.add("opacity-0", "transition-opacity", "duration-200")   
+                                addColorLS({ name : active().code, color: active().rgbString })
+                            }}
+                        >
+                            <span class="z-30 select-none text-xs uppercase tracking-wide text-white opacity-100">
+                                Add
+                            </span>
+                        </button>
+
                         <div class={"flex items-center justify-center"}>
                             <div class="flex h-72 w-72 flex-col border border-neutral-500 shadow-lg">
                                 <div
                                     class="flex w-full flex-1  flex-col items-center justify-center p-2 text-neutral-900"
-                                    style={{ "background-color": chip().rgbString, color: checkContrast(chip().hex)}}
+                                    style={{ "background-color": active().rgbString, color: checkContrast(active().hex)}}
                                 >
-                                    <p class="text-sm">{chip().hex} </p>
-                                    <p class="text-sm">{chip().rgbString}</p>
-                                    <p class="text-sm">{chip().oklch}</p>
+                                    <p class="text-sm">{active().hex} </p>
+                                    <p class="text-sm">{active().rgbString}</p>
+                                    <p class="text-sm">{active().oklch}</p>
                                 </div>
                                 <div class="flex h-1/4 w-full flex-col justify-center bg-white px-6 py-3 text-neutral-900">
                                     <p class="">WEBTONE</p>
-                                    <p class="">{chip().code}</p>
+                                    <p class="">{active().code}</p>
                                 </div>
                             </div>
                         </div>
@@ -116,6 +148,7 @@ export default Webtone
 type WebtoneChipProps = {
     code: string
     rgb: string
+    isChecked: boolean
     i: () => number
 }
 
@@ -123,7 +156,7 @@ const WebtoneChip = (props: WebtoneChipProps) => {
     return (
         <div
             class={
-                "chip mt-2 flex h-28 w-28 flex-col border transition-shadow duration-150 hover:scale-150 hover:border hover:shadow-lg"
+                "relative chip mt-2 flex h-28 w-28 flex-col border transition-shadow duration-150 hover:outline hover:border hover:shadow-lg"
             }
             data-webtone={props.code}
         >
@@ -137,6 +170,9 @@ const WebtoneChip = (props: WebtoneChipProps) => {
                 <p class="text-[10px]">WEBTONE</p>
                 <p class="text-[10px]">{props.code}</p>
             </div>
+            <input type="checkbox" class="absolute bottom-1 right-1 h-4 w-4 border-neutral-200 text-sm uppercase" checked={isSelectedState().has(props.code)}>
+                <span class="z-30 select-none text-xs uppercase tracking-wide text-white opacity-100">+</span>
+            </input>
         </div>
     )
 }
