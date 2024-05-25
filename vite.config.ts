@@ -5,6 +5,7 @@ import path from "path";
 export default defineConfig({
 	base: "/",
 	root: "./src",
+    publicDir: "../public",
 	server: {
 		host: "0.0.0.0",
 		port: 3334,

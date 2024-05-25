@@ -1,0 +1,25 @@
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "url": "https://webtone.org/",
+    "name": "WEBTONE",
+    "image": "https://webtone.org/screenshot.jpg",
+    "description": "WEBTONE is a digital first color system with 2880 curated colors for digital displays.",
+    "inLanguage": "en",
+    "copyrightYear": "2024",
+    "copyrightHolder": [
+        {
+            "@type": "Organization",
+            "url": "https://webtone.org/",
+            "name": "WEBTONE",
+            "contactPoint": [
+                {
+                    "@type": "ContactPoint",
+                    "url": "https: //webtone.org/",
+                    "email": "info@webtone.org",
+                    "contactType": "customer service"
+                }
+            ]
+        }
+    ]
+}

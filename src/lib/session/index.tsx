@@ -21,6 +21,11 @@ class SessionMetrics {
     handleLifeCycle = (event: any) => {
         if (this.isDestroyed) return
 
+        if (event?.newState === "hidden") {
+            this.sendBeacon()
+            this.reset()
+        }
+
         if (event?.newState === "terminated" || event?.newState === "discarded") {
             this.sendBeacon()
             this.isDestroyed = true
@@ -40,7 +45,7 @@ class SessionMetrics {
             pages: this.pages,
             actions : this.actions,
         }
-        const blob = new Blob([JSON.stringify(obj)], { type: "application/json" })
+        const blob = new Blob([btoa(JSON.stringify(obj))], { type: "application/json" })
         navigator.sendBeacon(this.url(), blob)
     }
 
@@ -50,6 +55,11 @@ class SessionMetrics {
 
     addAction(action: string) {
         this.actions.push(action)
+    }
+
+    reset() {
+        this.pages = []
+        this.actions = []
     }
 }
 
