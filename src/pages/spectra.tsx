@@ -66,9 +66,9 @@ const Spectra = () => {
             </section>
 
             <section class="mt-16 flex w-full flex-col items-center justify-center">
-                <section class="block w-11/12" data-palette={activeDotIndex()}>
-                    <h1 class="mt-6 text-left text-2xl">WEBTONE - {chips()[activeDotIndex()].name}</h1>
-                    <article onClick={handleClick} class="my-2 flex flex-row flex-wrap items-center gap-x-1">
+                <section class="w-11/12" data-palette={activeDotIndex()}>
+                    <h1 class="mt-12 mb-6 text-center text-2xl">WEBTONE - {chips()[activeDotIndex()].name}</h1>
+                    <article onClick={handleClick} class="my-2 flex flex-row flex-wrap items-center justify-center gap-x-1">
                         <For each={chips()[activeDotIndex()].arr}>
                             {(chip, i) => (
                                 <WebtoneChip

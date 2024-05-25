@@ -30,13 +30,13 @@ const Webtone = () => {
     return (
         <main class="container mx-auto mb-28 min-h-screen max-w-7xl">
             <Welcome />
-            <section onClick={handleClick} class="mt-16 flex w-full flex-col items-center justify-center">
+            <section onClick={handleClick} class="mt-16 flex w-full flex-col items-center justify-center ">
                 <For each={webtone}>
                     {(hue, index) => {
                         return (
-                            <section class="block w-11/12" data-palette={Math.floor(index())}>
-                                <h1 class="mt-6 text-left text-2xl">WEBTONE - {hue.name}</h1>
-                                <article class="my-2 flex flex-row flex-wrap items-center gap-x-1">
+                            <section class="w-11/12" data-palette={Math.floor(index())}>
+                                <h1 class="mt-12 mb-6 text-center text-3xl">{hue.name}</h1>
+                                <article class="my-2 flex flex-row flex-wrap items-center justify-center gap-x-1">
                                     <For each={hue.arr}>
                                         {(chip, i) => <WebtoneChip code={chip.code} rgb={chip.rgbString} i={index} />}
                                     </For>
