@@ -8,6 +8,8 @@ import User from "./pages/user"
 import Spectra from "./pages/spectra"
 import Layout from "./pages/layout"
 
+import "./lib/session"
+
 const root = document.getElementById("root")
 render(
     () => (

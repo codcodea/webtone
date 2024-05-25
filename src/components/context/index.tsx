@@ -1,4 +1,4 @@
-import { children, createSignal, Show } from "solid-js"
+import { children, createEffect, createSignal, Show } from "solid-js"
 
 import {
     ContextMenu,
@@ -21,8 +21,9 @@ import {
 import { showColor, showName, setShowColor, setShowName } from "~/state/contextmenu"
 import { isRightClick } from "~/state/contextmenu"
 
-function ContextMenuDemo(props) {
+import { session } from "~/lib/session"
 
+function ContextMenuDemo(props) {
     const handleZup = () => {
         const id = isRightClick()
         props.handleCloneSort(id, "up")
@@ -32,6 +33,10 @@ function ContextMenuDemo(props) {
         const id = isRightClick()
         props.handleCloneSort(id, "down")
     }
+
+    createEffect(() => {
+        isRightClick() && session.addAction("cx")
+    })
 
     return (
         <ContextMenu>

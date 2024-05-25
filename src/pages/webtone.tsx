@@ -9,6 +9,8 @@ import type { Webtone, WebtoneItem } from "~/state/webtone"
 
 import { handleBlur, handleNormal, handleKeys, handleSelect } from "./handlers"
 
+import { session } from "~/lib/session"
+
 const Webtone = () => {
     let portal: HTMLDivElement
 
@@ -16,11 +18,12 @@ const Webtone = () => {
     const [isPortal, setPortal] = createSignal(false)
 
     onMount(() => {
-        //
+        session.addPage("pw")
     })
 
     createEffect(() => {
         isPortal() ? (handleBlur(), addKeys()) : (handleNormal(), removeKeys())
+        isPortal() && session.addAction("po")
     })
 
     const { addKeys, removeKeys } = handleKeys(setPortal, portal)
@@ -35,7 +38,7 @@ const Webtone = () => {
                     {(hue, index) => {
                         return (
                             <section class="w-11/12" data-palette={Math.floor(index())}>
-                                <h1 class="mt-12 mb-6 text-center text-3xl">{hue.name}</h1>
+                                <h1 class="mb-6 mt-12 text-center text-3xl">{hue.name}</h1>
                                 <article class="my-2 flex flex-row flex-wrap items-center justify-center gap-x-1">
                                     <For each={hue.arr}>
                                         {(chip, i) => <WebtoneChip code={chip.code} rgb={chip.rgbString} i={index} />}
@@ -55,6 +58,3 @@ const Webtone = () => {
 }
 
 export default Webtone
-
-
-

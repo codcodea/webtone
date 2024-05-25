@@ -1,4 +1,4 @@
-import { For, createSignal, Show, createEffect } from "solid-js"
+import { For, createSignal, Show, createEffect, onMount } from "solid-js"
 
 import { addColorLS, rmColorLS, getColorsState } from "../lib/ls"
 
@@ -12,6 +12,8 @@ import { activeDotIndex, setActiveDotIndex } from "~/state/spectra"
 
 import { handleBlur, handleNormal, handleKeys, handleSelect } from "./handlers"
 
+import { session } from "~/lib/session"
+
 const Spectra = () => {
     let portal: HTMLDivElement
 
@@ -19,6 +21,10 @@ const Spectra = () => {
     const [isPortal, setPortal] = createSignal(false)
 
     const handleClick = handleSelect(setActive, setPortal)
+
+    onMount(() => {
+        session.addPage("ps")
+    })
 
     createEffect(() => {
         isPortal() ? (handleBlur(), addKeys()) : (handleNormal(), removeKeys())
@@ -67,16 +73,13 @@ const Spectra = () => {
 
             <section class="mt-16 flex w-full flex-col items-center justify-center">
                 <section class="w-11/12" data-palette={activeDotIndex()}>
-                    <h1 class="mt-12 mb-6 text-center text-2xl">WEBTONE - {chips()[activeDotIndex()].name}</h1>
-                    <article onClick={handleClick} class="my-2 flex flex-row flex-wrap items-center justify-center gap-x-1">
+                    <h1 class="mb-6 mt-12 text-center text-2xl">WEBTONE - {chips()[activeDotIndex()].name}</h1>
+                    <article
+                        onClick={handleClick}
+                        class="my-2 flex flex-row flex-wrap items-center justify-center gap-x-1"
+                    >
                         <For each={chips()[activeDotIndex()].arr}>
-                            {(chip, i) => (
-                                <WebtoneChip
-                                    code={chip.code}
-                                    rgb={chip.rgbString}
-                                    i={activeDotIndex}
-                                />
-                            )}
+                            {(chip, i) => <WebtoneChip code={chip.code} rgb={chip.rgbString} i={activeDotIndex} />}
                         </For>
                     </article>
                 </section>

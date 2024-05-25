@@ -32,6 +32,8 @@ import type { Clone } from "../lib/ls/index.tsx"
 import ContextMenuDemo from "../components/context/index.tsx"
 import { isRightClick, setIsRightClick, showColor, showName } from "../state/contextmenu"
 
+import { session } from "../lib/session/index.tsx"
+
 type Position = {
     x: number
     y: number
@@ -58,6 +60,7 @@ const User = () => {
     // Get initial state from local storage
     onMount(() => {
         setClones(getClonesLS())
+        session.addPage("pu")
     })
 
     // Save state to local storage
@@ -86,6 +89,7 @@ const User = () => {
                 } as Clone
 
                 setClones([...clones(), clone])
+                session.addAction("dr")
             }
         } else if (draggable && droppable) {
             const cSort = getColorsState()
@@ -96,6 +100,7 @@ const User = () => {
                 const updatedSort = cSort.slice()
                 updatedSort.splice(tIndex, 0, ...updatedSort.splice(fIndex, 1))
                 setColorsState(updatedSort)
+                session.addAction("so")
             }
         }
     }
@@ -126,10 +131,12 @@ const User = () => {
         const id = isRightClick() // rgbString
         if (id.includes("clone-")) {
             setClones((prev) => prev.filter((clone) => clone.id !== id))
+            session.addAction("dl")
         } else if (id) {
             setClones((prev) => prev.filter((clone) => clone.color !== id))
             isSelectedState().delete(getColorsState().find((c) => c.color === id).name)
             setColorsState((prev) => prev.filter((color) => color.color !== id))
+            session.addAction("dl")
         }
     }
 
@@ -154,7 +161,7 @@ const User = () => {
 
                     <section
                         ref={leftColumn}
-                        class="scrollbar-hide col-span-2 mx-auto h-full w-full overflow-auto border-none py-12 outline-none flex flex-col items-center justify-start"
+                        class="scrollbar-hide col-span-2 mx-auto flex h-full w-full flex-col items-center justify-start overflow-auto border-none py-12 outline-none"
                     >
                         <ContextMenuDemo handleDelete={handleDelete} handleCloneSort={handleCloneSort} showZ={false}>
                             <div class="space-y-3 ">

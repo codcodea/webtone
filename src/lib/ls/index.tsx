@@ -17,6 +17,7 @@ type Clone = {
 type Selected = Set<string>
 
 import { createSignal } from "solid-js"
+import { session } from "~/lib/session"
 
 // States
 const [getColorsState, setColorsState] = createSignal<SavedColor[]>([])
@@ -48,12 +49,14 @@ const addColorLS = (obj: SavedColor) => {
     setColorsState(colors)
     const isSelected = colors.map((c) => c.name)
     setIsSelectedState(new Set(isSelected))
+    session.addAction("add")
 }
 
 const clearColorsLS = () => {
     localStorage.removeItem("colors")
     setColorsState([])
     setIsSelectedState(new Set<string>())
+    session.addAction("cl")
 }
 
 const rmColorLS = (obj: SavedColor) => {
@@ -66,6 +69,7 @@ const rmColorLS = (obj: SavedColor) => {
     setIsSelectedState(new Set(colors.map((c) => c.name)))
     setClones((prev) => prev.filter((clone) => clone.name !== obj.name))
     addClonesLS(clones())
+    session.addAction("rm")
 }
 
 const saveColorSortLS = (colors: SavedColor[]) => {
