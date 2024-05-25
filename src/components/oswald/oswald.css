@@ -1,0 +1,249 @@
+:root {
+    --spectrum-size: 300px;
+    --dot-size: 15px;
+    --dot-delta: 42%;
+}
+
+.oswald-spectrum {
+    width: var(--spectrum-size);
+    height: var(--spectrum-size);
+    border-radius: 50%;
+    background: conic-gradient(
+        #fbcf21 -22.5deg 22.5deg,
+        #e77a2b 22.5deg 67.5deg,
+        #c42330 67.5deg 112.5deg,
+        #412162 112.5deg 157.5deg,
+        #174a80 157.5deg 202.5deg,
+        #007597 202.5deg 247.5deg,
+        #00826b 247.5deg 292.5deg,
+        #4daf47 292.5deg 337.5deg,
+        #fbcf21 337.5deg 382.5deg 
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.oswald-spectrum::before {
+    content: "";
+    width: 70%;
+    height: 70%;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.dot {
+    width: var(--dot-size);
+    height: var(--dot-size);
+    background-color: rgba(240, 240, 240, 0.6);
+    border-radius: 50%;
+    position: absolute;
+    transition: background-color 0.2s, transform 0.2s, scale 0.2s;
+}
+
+.dot:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.dot.active {
+    background-color: rgba(255, 255, 255);
+    scale: 1.5;
+}
+
+.dot.has-selected {
+    background-color: rgba(22, 22, 22, 0.737);
+}
+
+/* Main dots */
+.dot-1 {
+    top: calc(50% - var(--dot-delta) * cos(0deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(0deg) - var(--dot-size) / 2);
+} /* Yellow */
+.dot-2 {
+    top: calc(50% - var(--dot-delta) * cos(45deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(45deg) - var(--dot-size) / 2);
+} /* Orange */
+.dot-3 {
+    top: calc(50% - var(--dot-delta) * cos(90deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(90deg) - var(--dot-size) / 2);
+} /* Red */
+.dot-4 {
+    top: calc(50% - var(--dot-delta) * cos(135deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(135deg) - var(--dot-size) / 2);
+} /* Purple */
+.dot-5 {
+    top: calc(50% - var(--dot-delta) * cos(180deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(180deg) - var(--dot-size) / 2);
+} /* Blue */
+.dot-6 {
+    top: calc(50% - var(--dot-delta) * cos(225deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(225deg) - var(--dot-size) / 2);
+} /* Navy */
+.dot-7 {
+    top: calc(50% - var(--dot-delta) * cos(270deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(270deg) - var(--dot-size) / 2);
+} /* Teal */
+.dot-8 {
+    top: calc(50% - var(--dot-delta) * cos(315deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(315deg) - var(--dot-size) / 2);
+} /* Green */
+
+/* Intermediate dots */
+.dot-1-1 {
+    top: calc(50% - var(--dot-delta) * cos(9deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(9deg) - var(--dot-size) / 2);
+}
+.dot-1-2 {
+    top: calc(50% - var(--dot-delta) * cos(18deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(18deg) - var(--dot-size) / 2);
+}
+.dot-1-3 {
+    top: calc(50% - var(--dot-delta) * cos(27deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(27deg) - var(--dot-size) / 2);
+}
+.dot-1-4 {
+    top: calc(50% - var(--dot-delta) * cos(36deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(36deg) - var(--dot-size) / 2);
+}
+
+.dot-2-1 {
+    top: calc(50% - var(--dot-delta) * cos(54deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(54deg) - var(--dot-size) / 2);
+}
+
+.dot-2-2 {
+    top: calc(50% - var(--dot-delta) * cos(63deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(63deg) - var(--dot-size) / 2);
+}
+
+.dot-2-3 {
+    top: calc(50% - var(--dot-delta) * cos(72deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(72deg) - var(--dot-size) / 2);
+}
+
+.dot-2-4 {
+    top: calc(50% - var(--dot-delta) * cos(81deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(81deg) - var(--dot-size) / 2);
+}
+
+.dot-3-1 {
+    top: calc(50% - var(--dot-delta) * cos(99deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(99deg) - var(--dot-size) / 2);
+}
+
+.dot-3-2 {
+    top: calc(50% - var(--dot-delta) * cos(108deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(108deg) - var(--dot-size) / 2);
+}
+
+.dot-3-3 {
+    top: calc(50% - var(--dot-delta) * cos(117deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(117deg) - var(--dot-size) / 2);
+}
+
+.dot-3-4 {
+    top: calc(50% - var(--dot-delta) * cos(126deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(126deg) - var(--dot-size) / 2);
+}
+
+.dot-4-1 {
+    top: calc(50% - var(--dot-delta) * cos(144deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(144deg) - var(--dot-size) / 2);
+}
+
+.dot-4-2 {
+    top: calc(50% - var(--dot-delta) * cos(153deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(153deg) - var(--dot-size) / 2);
+}
+
+.dot-4-3 {
+    top: calc(50% - var(--dot-delta) * cos(162deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(162deg) - var(--dot-size) / 2);
+}
+
+.dot-4-4 {
+    top: calc(50% - var(--dot-delta) * cos(171deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(171deg) - var(--dot-size) / 2);
+}
+
+.dot-5-1 {
+    top: calc(50% - var(--dot-delta) * cos(189deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(189deg) - var(--dot-size) / 2);
+}
+
+.dot-5-2 {
+    top: calc(50% - var(--dot-delta) * cos(198deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(198deg) - var(--dot-size) / 2);
+}
+
+.dot-5-3 {
+    top: calc(50% - var(--dot-delta) * cos(207deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(207deg) - var(--dot-size) / 2);
+}
+
+.dot-5-4 {
+    top: calc(50% - var(--dot-delta) * cos(216deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(216deg) - var(--dot-size) / 2);
+}
+
+.dot-6-1 {
+    top: calc(50% - var(--dot-delta) * cos(234deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(234deg) - var(--dot-size) / 2);
+}
+
+.dot-6-2 {
+    top: calc(50% - var(--dot-delta) * cos(243deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(243deg) - var(--dot-size) / 2);
+}
+
+.dot-6-3 {
+    top: calc(50% - var(--dot-delta) * cos(252deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(252deg) - var(--dot-size) / 2);
+}
+
+.dot-6-4 {
+    top: calc(50% - var(--dot-delta) * cos(261deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(261deg) - var(--dot-size) / 2);
+}
+
+.dot-7-1 {
+    top: calc(50% - var(--dot-delta) * cos(279deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(279deg) - var(--dot-size) / 2);
+}
+
+.dot-7-2 {
+    top: calc(50% - var(--dot-delta) * cos(288deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(288deg) - var(--dot-size) / 2);
+}
+
+.dot-7-3 {
+    top: calc(50% - var(--dot-delta) * cos(297deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(297deg) - var(--dot-size) / 2);
+}
+
+.dot-7-4 {
+    top: calc(50% - var(--dot-delta) * cos(306deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(306deg) - var(--dot-size) / 2);
+}
+
+.dot-8-1 {
+    top: calc(50% - var(--dot-delta) * cos(324deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(324deg) - var(--dot-size) / 2);
+}
+
+.dot-8-2 {
+    top: calc(50% - var(--dot-delta) * cos(333deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(333deg) - var(--dot-size) / 2);
+}
+
+.dot-8-3 {
+    top: calc(50% - var(--dot-delta) * cos(342deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(342deg) - var(--dot-size) / 2);
+}
+
+.dot-8-4 {
+    top: calc(50% - var(--dot-delta) * cos(351deg) - var(--dot-size) / 2);
+    left: calc(50% + var(--dot-delta) * sin(351deg) - var(--dot-size) / 2);
+}

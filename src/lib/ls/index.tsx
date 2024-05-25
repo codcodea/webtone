@@ -1,7 +1,9 @@
 type SavedColor = {
+    index: string
     name: string
     color: string
 }
+
 type Clone = {
     id: string
     dx: number
@@ -33,7 +35,6 @@ const initColors = () => {
 
 const addColorLS = (obj: SavedColor) => {
     const inColor = obj.color.trim()
-    const inName = obj.name.trim()
 
     let colors: SavedColor[] = JSON.parse(localStorage.getItem("colors") || "[]")
     // check if hex is already in the array
@@ -41,7 +42,7 @@ const addColorLS = (obj: SavedColor) => {
         return
     }
 
-    colors.push({ name: inName, color: inColor })
+    colors.push({ name: obj.name, color: inColor, index: obj.index})
     localStorage.setItem("colors", JSON.stringify(colors))
 
     setColorsState(colors)
