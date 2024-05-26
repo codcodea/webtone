@@ -11,7 +11,7 @@ const WebtoneChip = (props: WebtoneChipProps) => {
     return (
         <div
             class={
-                "relative chip mt-2 flex h-28 w-28 flex-col border transition-shadow duration-150 hover:outline hover:border hover:shadow-lg"
+                "relative chip mt-2 flex h-28 w-28 flex-col border transition-shadow duration-150 hover:border-2 hover:shadow-lg"
             }
             data-webtone={props.code}
             data-index={props.i()}

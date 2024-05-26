@@ -1,12 +1,14 @@
 /* @refresh reload */
 import { render } from "solid-js/web"
 import { Router, Route } from "@solidjs/router"
+import { lazy } from "solid-js"
 
 // import Home from './dev/home'
 import Webtone from "./pages/webtone"
-import User from "./pages/user"
-import Spectra from "./pages/spectra"
 import Layout from "./pages/layout"
+const User = lazy(() => import("./pages/user"))
+const Spectra = lazy(() => import("./pages/spectra"))
+const DownloadsPage = lazy(() => import("./pages/downloads"))
 
 import "./lib/session"
 
@@ -16,7 +18,8 @@ render(
         <Router root={Layout}>
             <Route path="/" component={Webtone} />
             <Route path="/spectra" component={Spectra} />
-            <Route path="/user" component={User} />
+            <Route path="/canvas" component={User} />
+            <Route path="/downloads" component={DownloadsPage} />
         </Router>
     ),
     root!

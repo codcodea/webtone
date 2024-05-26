@@ -52,6 +52,11 @@
     scale: 1.5;
 }
 
+.dot.effect {
+    /* background-color: rgba(255, 255, 255, 0.95); */
+    scale: 1.5;
+}
+
 .dot.has-selected {
     background-color: rgba(22, 22, 22, 0.737);
 }

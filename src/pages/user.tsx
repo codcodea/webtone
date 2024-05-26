@@ -186,11 +186,10 @@ const User = () => {
                         </DragOverlay>
                         <div class="absolute bottom-4 left-[5.5%] flex h-12 w-16 items-center justify-center ">
                             <button
-                                class="z-20 h-6 w-24 border border-neutral-400 text-sm uppercase shadow"
-                                style={{ "background-color": "rgba(0,0,0,0.2)" }}
+                                class="z-20 h-6 w-24 border border-neutral-800 text-sm uppercase shadow"
                                 onClick={handleTrash}
                             >
-                                <span class="z-30 select-none text-xs uppercase tracking-wide text-neutral-700 opacity-100">
+                                <span class="z-30 select-none text-xs uppercase tracking-wide text-neutral-800 opacity-100 hover:shadow">
                                     Clear
                                 </span>
                             </button>

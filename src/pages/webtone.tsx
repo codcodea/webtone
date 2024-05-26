@@ -38,7 +38,7 @@ const Webtone = () => {
                     {(hue, index) => {
                         return (
                             <section class="w-11/12" data-palette={Math.floor(index())}>
-                                <h1 class="mb-6 mt-12 text-center text-3xl">{hue.name}</h1>
+                                <h1 class="mb-6 mt-12 text-center text-2xl text-neutral-800">{hue.name}</h1>
                                 <article class="my-2 flex flex-row flex-wrap items-center justify-center gap-x-1">
                                     <For each={hue.arr}>
                                         {(chip, i) => <WebtoneChip code={chip.code} rgb={chip.rgbString} i={index} />}

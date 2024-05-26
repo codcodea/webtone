@@ -109,7 +109,7 @@
 
 @layer utilities {
     .content-area {
-        height: calc(100vh - 55px);
+        height: calc(100vh - 125px);
     }
 }
 

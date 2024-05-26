@@ -1,14 +1,17 @@
 /**@type {import("tailwindcss").Config} */
 module.exports = {
   darkMode: ["class", '[data-kb-theme="dark"]'],
-  content: ["./src/**/*.{ts,tsx}"],
+  content: ["./src/index.html", "./src/**/*.{ts,tsx}"],
   theme: {
     container: {
       center: true,
       padding: "2rem",
       screens: {
         "2xl": "1400px"
-      }
+      },
+      fontFamily: {
+        serif: ["Georgia", "serif"],
+      },
     },
     extend: {
       colors: {
