@@ -37,6 +37,8 @@ const PortalComponent = (props: PortalProps) => {
                             <p class="text-sm">{props.active().hex} </p>
                             <p class="text-sm">{props.active().rgbString}</p>
                             <p class="text-sm">{props.active().oklch}</p>
+                            <p class="text-sm">{props.active().hsl}</p>
+                            <p class="text-sm">{props.active().cmyk}</p>
                         </div>
                         <div class="flex h-1/4 w-full flex-col justify-center bg-white px-6 py-3 text-neutral-900">
                             <p class="">WEBTONE</p>

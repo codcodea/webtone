@@ -16,6 +16,7 @@ type WebtoneItem = {
     hex: string;
     oklch: string;
     hsl: string;
+    cmyk: string;
 };
 
 

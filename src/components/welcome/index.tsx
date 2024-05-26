@@ -5,7 +5,7 @@ const Welcome = () => {
     const p = "mt-3 text-lg"
     const li = "mt-2 text-lg"
     const span = "font-bold"
-
+    const a = "text-blue-600 underline text-xs"
 
     return (
         <section class="flex w-full flex-col items-center justify-center">
@@ -54,7 +54,8 @@ const Welcome = () => {
                     </li>
                     <li class={li}>
                         <span class={span}>Conversion Guidance:</span> Provides detailed guidelines for converting
-                        WEBTONE colors to CMYK, ensuring color fidelity in digital designs when printed.
+                        WEBTONE colors to CMYK, ensuring color fidelity in digital designs when printed. Here, a
+                        standard convention is used (sRGB ICC v4 to PSO Coated v3).
                     </li>
                     <li class={li}>
                         <span class={span}>Free to Use:</span> WEBTONE is freely available for use in any project,
@@ -104,7 +105,26 @@ const Welcome = () => {
                         <tr class="border-t">
                             <td class=" py-2 italic">v0.812</td>
                             <td class=" py-2">May 21, 2024</td>
-                            <td class=" py-2">Prefix and color names.</td>
+                            <td class=" py-2">Prefix and Color Names.</td>
+                        </tr>
+                        <tr class="border-t">
+                            <td class=" py-2 italic">v0.813</td>
+                            <td class=" py-2">May 26, 2024</td>
+                            <td class=" py-2">Feature: Spectra and Canvas</td>
+                        </tr>
+                        <tr class="border-t">
+                            <td class=" py-2 italic"></td>
+                            <td class=" py-2"></td>
+                            <td class=" py-2">
+                                Standard CMYK Conversion:{" "}
+                                <a class={a} href="https://www.color.org/srgbprofiles.xalter">
+                                    sRGB ICC v4
+                                </a>
+                                ,{" "}
+                                <a class={a} href="http://www.eci.org/doku.php?id=en:downloads">
+                                    PSO Coated v3
+                                </a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
