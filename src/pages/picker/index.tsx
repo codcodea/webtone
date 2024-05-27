@@ -6,9 +6,11 @@ import { handleColor } from "~/handlers/color"
 import type { WebtoneItem } from "~/state/webtone"
 import { addColorLS } from "~/lib/ls"
 
+import { env } from "~/lib/api"
+
 // --------------------------------------------------------
 
-const api = "https://api.vildawebben.dev/cc/colors/"
+
 
 const Chrome = () => {
     const [webtone, setWebtone] = createSignal<WebtoneItem>(null)
@@ -99,7 +101,7 @@ const Chrome = () => {
                 <input
                     id="hidden-input"
                     ref={hiddenEl}
-                    hx-get={api}
+                    hx-get={env.api}
                     hx-trigger="send-color"
                     hx-target="#output"
                     type="hidden"
@@ -145,8 +147,8 @@ const Chrome = () => {
             const c = evt.detail.parameters.colors
             const noHash = c.substring(1)
 
-            if (api.includes("localhost")) {
-                evt.detail.path = api + noHash
+            if (env.api.includes("localhost")) {
+                evt.detail.path = env.api + noHash
                 return
             }
             evt.detail.path += noHash
