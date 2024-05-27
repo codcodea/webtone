@@ -1,4 +1,5 @@
 import lifecycle from "page-lifecycle"
+import { env } from "~/lib/api"
 
 class SessionMetrics {
     start = Date.now()
@@ -36,9 +37,6 @@ class SessionMetrics {
         }
     }
 
-    url() : string {
-        return this.isDev ? "http://localhost:4005/wt" : "https://api.vildawebben.dev/cc/wt"
-    }
     sendBeacon() {
         const obj = {
             lang: navigator.language,
@@ -46,7 +44,7 @@ class SessionMetrics {
             actions : this.actions,
         }
         const blob = new Blob([btoa(JSON.stringify(obj))], { type: "application/json" })
-        navigator.sendBeacon(this.url(), blob)
+        navigator.sendBeacon(env.metrics, blob)
     }
 
     addPage(page: string) {

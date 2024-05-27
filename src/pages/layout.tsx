@@ -3,6 +3,7 @@ import Toolbar from "~/components/toolbar/index.tsx"
 import { useLocation } from "@solidjs/router"
 import { initColors } from "~/lib/ls/index.tsx"
 import { cn } from "~/lib/merge"
+import {env} from "~/lib/api"
 
 // --------------------------------------------------------
 
@@ -22,7 +23,7 @@ const Layout = (props: LayoutProps) => {
         window.htmx.config.methodsThatUseUrlParams = []
 
         window.htmx.createWebSocket = function () {
-            return new WebSocket("ws://localhost:4005/stream", [import.meta.env.VITE_API_KEY])
+            return new WebSocket(env.api, [import.meta.env.VITE_API_KEY])
         }
     })
 
