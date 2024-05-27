@@ -13,15 +13,14 @@ import { activeDotIndex, setActiveDotIndex } from "~/state/spectra"
 import { handleBlur, handleNormal, handleKeys, handleSelect } from "./handlers"
 
 import { session } from "~/lib/session"
-import { dot } from "node:test/reporters"
 
 const Spectra = () => {
     let portal: HTMLDivElement
 
-    const [active, setActive] = createSignal<WebtoneItem>(null)
+    const [webtone, setWebtone] = createSignal<WebtoneItem>(null)
     const [isPortal, setPortal] = createSignal(false)
 
-    const handleClick = handleSelect(setActive, setPortal)
+    const handleClick = handleSelect(setWebtone, setPortal)
 
     onMount(() => {
         session.addPage("ps")
@@ -119,7 +118,7 @@ const Spectra = () => {
                     </section>
                 </section>
                 <Show when={isPortal()}>
-                    <PortalComponent portal={portal} active={active} setPortal={setPortal} />
+                    <PortalComponent portal={portal} active={webtone} setPortal={setPortal} />
                 </Show>
             </main>
             <footer class="h-96 w-full bg-white"></footer>

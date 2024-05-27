@@ -1,4 +1,3 @@
-
 import { isSelectedState } from "~/lib/ls"
 
 type WebtoneChipProps = {
@@ -11,7 +10,7 @@ const WebtoneChip = (props: WebtoneChipProps) => {
     return (
         <div
             class={
-                "relative chip mt-2 flex h-28 w-28 flex-col border transition-shadow duration-150 hover:border-2 hover:shadow-lg"
+                "chip relative mt-2 flex h-28 w-28 flex-col border transition-shadow duration-150 hover:border-2 hover:shadow-lg"
             }
             data-webtone={props.code}
             data-index={props.i()}
@@ -26,7 +25,11 @@ const WebtoneChip = (props: WebtoneChipProps) => {
                 <p class="text-[10px]">WEBTONE</p>
                 <p class="text-[10px]">{props.code}</p>
             </div>
-            <input type="checkbox" class="absolute bottom-1 right-1 h-4 w-4 border-neutral-200 text-sm uppercase" checked={isSelectedState().has(props.code)}>
+            <input
+                type="checkbox"
+                class="absolute bottom-1 right-1 h-4 w-4 border-neutral-200 text-sm uppercase"
+                checked={isSelectedState().has(props.code)}
+            >
                 <span class="z-30 select-none text-xs uppercase tracking-wide text-white opacity-100">+</span>
             </input>
         </div>

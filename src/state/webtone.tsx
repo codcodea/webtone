@@ -17,10 +17,15 @@ type WebtoneItem = {
     oklch: string;
     hsl: string;
     cmyk: string;
+    lum: string;
 };
 
 
 const [chips, setChips] = createSignal<Webtone>(webtone)
 
-export { chips, setChips }
+const lookupWebtoneIndex = (code: string) => {
+    return chips().findIndex((chip) => chip.arr.some((item) => item.code === code.trim()))
+}
+
+export { chips, setChips, lookupWebtoneIndex }
 export type { Webtone, WebtoneItem }

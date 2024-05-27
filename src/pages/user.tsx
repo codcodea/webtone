@@ -296,8 +296,11 @@ const Workarea = (props: WorkareaProps) => {
                         showColor() || showName() ? "py-1.5" : "py-0"
                     )}
                 >
-                    <Show when={showColor()}>
+                    <Show when={showColor() && props.name.includes("/")}>
                         <p class="text-base uppercase">WEBTONE</p>
+                    </Show>
+                    <Show when={showColor() && !props.name.includes("/")}>
+                        <p class="text-base uppercase">CUSTOM</p>
                     </Show>
                     <Show when={showName()}>
                         <p class="truncate text-sm">{props.name}</p>

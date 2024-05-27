@@ -17,6 +17,13 @@ const Layout = (props: LayoutProps) => {
 
     onMount(() => {
         initColors()
+
+        window.htmx.config.globalViewTransitions = true
+        window.htmx.config.methodsThatUseUrlParams = []
+
+        window.htmx.createWebSocket = function () {
+            return new WebSocket("ws://localhost:4005/stream", [import.meta.env.VITE_API_KEY])
+        }
     })
 
     return (
@@ -25,7 +32,7 @@ const Layout = (props: LayoutProps) => {
                 ref={header}
                 id="header"
                 class={cn(
-                    "opacity-1 invisible h-16 transition-all duration-200 lg:visible lg:block lg:shadow border-b border-neutral-300  bg-white",
+                    "opacity-1 invisible h-16 border-b border-neutral-300 bg-white transition-all duration-200 lg:visible lg:block  lg:shadow",
                     location.pathname != "/user" ? "sticky top-0 z-10 " : ""
                 )}
             >

@@ -1,5 +1,8 @@
+import { lookupWebtoneIndex } from "~/state/webtone"
+
+
 type SavedColor = {
-    index: string
+    index: number | undefined
     name: string
     color: string
 }
@@ -35,6 +38,11 @@ const initColors = () => {
 }
 
 const addColorLS = (obj: SavedColor) => {
+
+    if(obj.index === -1) {
+        obj.index = lookupWebtoneIndex(obj.name)
+    }
+
     const inColor = obj.color.trim()
 
     let colors: SavedColor[] = JSON.parse(localStorage.getItem("colors") || "[]")
@@ -47,8 +55,8 @@ const addColorLS = (obj: SavedColor) => {
     localStorage.setItem("colors", JSON.stringify(colors))
 
     setColorsState(colors)
-    const isSelected = colors.map((c) => c.name)
-    setIsSelectedState(new Set(isSelected))
+    const isSelected = colors.filter(c => c.index != undefined).map((c) => c.name)
+    setIsSelectedState(new Set<string>(isSelected))
     session.addAction("add")
 }
 
