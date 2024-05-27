@@ -1,9 +1,4 @@
-import { Show, createSignal, onCleanup, onMount, createEffect, Setter, lazy, Switch, Match } from "solid-js"
-import { Portal } from "solid-js/web"
-
-import PortalComponent from "~/components/portal"
-
-//import { clearNotify, handleColor, initNotify, initTitleChrome } from "../../handlers"
+import { createSignal, onCleanup, onMount, createEffect, Setter } from "solid-js"
 
 import { cn } from "../../lib/merge"
 
@@ -13,7 +8,7 @@ import { addColorLS } from "~/lib/ls"
 
 // --------------------------------------------------------
 
-const api = "https://vildawebben.dev/cc/colors/"
+const api = "https://api.vildawebben.dev/cc/colors/"
 
 const Chrome = () => {
     const [webtone, setWebtone] = createSignal<WebtoneItem>(null)
