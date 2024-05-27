@@ -13,7 +13,7 @@ import { addColorLS } from "~/lib/ls"
 
 // --------------------------------------------------------
 
-const api = "http://localhost:4005/webtone/"
+const api = "https://vildawebben.dev/cc/colors/"
 
 const Chrome = () => {
     const [webtone, setWebtone] = createSignal<WebtoneItem>(null)
