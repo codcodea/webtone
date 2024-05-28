@@ -7,7 +7,7 @@ const Toolbar = () => {
     return (
         <div class="z-50 flex h-full w-full items-center justify-center gap-6  text-neutral-800">
             <div class="relative w-24 text-base">
-                WEBTONE
+                <A href="/">WEBTONE</A>
                 <div class="absolute -left-4 -top-[4px] h-8 w-2 overflow-hidden">
                     {/* <span class="absolute top-1 h-3 w-3 bg-[#ff7830] " />
                             <span class="absolute top-4 h-3 w-3 bg-[#1f1f1f] " /> */}

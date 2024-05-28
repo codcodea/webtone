@@ -10,7 +10,7 @@ import { chips } from "~/state/webtone"
 import type { WebtoneItem } from "~/state/webtone"
 import { activeDotIndex, setActiveDotIndex } from "~/state/spectra"
 
-import { handleBlur, handleNormal, handleKeys, handleSelect } from "./handlers"
+import { handleKeys, handleSelect } from "./handlers"
 
 import { session } from "~/lib/session"
 
@@ -27,7 +27,7 @@ const Spectra = () => {
     })
 
     createEffect(() => {
-        isPortal() ? (handleBlur(), addKeys()) : (handleNormal(), removeKeys())
+        isPortal() ? addKeys() : removeKeys()
 
         if (activeDotIndex() || getColorsState()) {
             handleCssClearDots()

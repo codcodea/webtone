@@ -1,4 +1,5 @@
 @import "ssr.css";
+@import "webtone.css" layer(utilities);
 
 @tailwind base;
 @tailwind components;

@@ -7,13 +7,11 @@ import PortalComponent from "~/components/portal"
 
 import type { Webtone, WebtoneItem } from "~/state/webtone"
 
-import { handleBlur, handleNormal, handleKeys, handleSelect } from "./handlers"
+import { handleKeys, handleSelect } from "./handlers"
 
 import { session } from "~/lib/session"
 
 const Webtone = () => {
-    let portal: HTMLDivElement
-
     const [active, setActive] = createSignal<WebtoneItem>(null)
     const [isPortal, setPortal] = createSignal(false)
 
@@ -22,11 +20,11 @@ const Webtone = () => {
     })
 
     createEffect(() => {
-        isPortal() ? (handleBlur(), addKeys()) : (handleNormal(), removeKeys())
+        isPortal() ? addKeys() : removeKeys()
         isPortal() && session.addAction("po")
     })
 
-    const { addKeys, removeKeys } = handleKeys(setPortal, portal)
+    const { addKeys, removeKeys } = handleKeys(setPortal)
 
     const handleClick = handleSelect(setActive, setPortal)
 
@@ -51,7 +49,7 @@ const Webtone = () => {
             </section>
 
             <Show when={isPortal()}>
-                <PortalComponent portal={portal} active={active} setPortal={setPortal} />
+                <PortalComponent active={active} setPortal={setPortal} />
             </Show>
         </main>
     )

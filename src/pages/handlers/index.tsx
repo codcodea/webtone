@@ -3,20 +3,12 @@ import { WebtoneItem, getWebtone } from "~/state/webtone"
 import { addColorLS, rmColorLS } from "~/lib/ls"
 import { chips } from "~/state/webtone"
 
-export const handleBlur = () => {
-    const root = document.getElementById("root")
-    root.style.filter = "blur(3px) brightness(1) grayscale(1)"
-}
 
-export const handleNormal = () => {
-    const root = document.getElementById("root")
-    root.style.filter = "none"
-}
-
-export function handleKeys(setIsPortal: Setter<boolean>, portal: HTMLDivElement) {
+export function handleKeys(setIsPortal: Setter<boolean>) {
     const addKeys = () => {
         addEventListener("keydown", handleEscKey)
-        document.getElementById("root").style.filter = "blur(5px)"
+        const root = document.getElementById("root")
+        root.style.filter = "blur(5px) grayscale(90%)"
         setTimeout(() => {
             addEventListener("click", handleClickOutside)
         }, 0)
@@ -35,7 +27,10 @@ export function handleKeys(setIsPortal: Setter<boolean>, portal: HTMLDivElement)
     }
 
     const handleClickOutside = (e: MouseEvent) => {
-        if (e.target !== portal) {
+        
+        const target = e.target as HTMLElement
+        const portal = document.getElementById("portal") 
+        if (target.closest("section") != portal) {
             setIsPortal(false)
         }
     }
