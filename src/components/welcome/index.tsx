@@ -125,7 +125,7 @@ const Welcome = () => {
                         <tr class="border-t">
                             <td class=" py-2 italic"></td>
                             <td class=" py-2"></td>
-                            <td class=" py-2">Download section</td>
+                            <td class=" py-2">Assets incl Adobe Swatches</td>
                         </tr>
                     </tbody>
                 </table>
