@@ -306,8 +306,10 @@ const Workarea = (props: WorkareaProps) => {
                         showColor() || showName() ? "py-1.5" : "py-0"
                     )}
                 >
-                    <p class="text-base uppercase">WEBTONE</p>
                     <Show when={showName()}>
+                        <p class="text-base uppercase">WEBTONE</p>
+                    </Show>
+                    <Show when={showColor()}>
                         <p class="truncate text-sm">{props.code}</p>
                     </Show>
                 </div>
