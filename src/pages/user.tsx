@@ -54,8 +54,6 @@ const User = () => {
     let leftColumn: HTMLDivElement
     let workarea: HTMLDivElement
 
-    const [isDragging, setIsDragging] = createSignal<WebtoneChip>(null)
-
     // Sortable and clone states
     const cIds = () => getColorsState().map((c) => c.code)
 
@@ -136,9 +134,9 @@ const User = () => {
             setClones((prev) => prev.filter((clone) => clone.id !== id))
             session.addAction("dl")
         } else if (id) {
-            setClones((prev) => prev.filter((clone) => clone.rgbString !== id))
-            isSelectedState().delete(getColorsState().find((c) => c.rgbString === id).code)
-            setColorsState((prev) => prev.filter((color) => color.rgbString !== id))
+            setClones((prev) => prev.filter((clone) => clone.code !== id))
+            isSelectedState().delete(getColorsState().find((c) => c.code === id).code)
+            setColorsState((prev) => prev.filter((color) => color.code!== id))
             session.addAction("dl")
         }
     }
