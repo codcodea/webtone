@@ -1,5 +1,5 @@
 import { Setter } from "solid-js"
-import { WebtoneItem } from "~/state/webtone"
+import { WebtoneItem, getWebtone } from "~/state/webtone"
 import { addColorLS, rmColorLS } from "~/lib/ls"
 import { chips } from "~/state/webtone"
 
@@ -70,9 +70,9 @@ export function handleSelect(setActive : Setter<WebtoneItem>, setPortal : Setter
 
         // Local Storage
         if (isCheckbox && isChecked) {
-            addColorLS({ name: obj.code, color: obj.rgbString, index })
+            addColorLS(getWebtone(code))
         } else if (isCheckbox) {
-            rmColorLS({ name: obj.code, color: obj.rgbString, index })
+            rmColorLS(code)
         }
     }
 }

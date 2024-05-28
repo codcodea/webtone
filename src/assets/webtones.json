@@ -26118,5 +26118,127 @@
         "lum": "0.047"
       }
     ]
+  },
+  {
+    "name": "Neutrals",
+    "arr": [
+      {
+        "code": "Neutral - 1",
+        "hex": "#0A0A0A",
+        "rgbString": "rgb(10, 10, 10)",
+        "oklch": "oklch(14.575% 0 none)",
+        "hsl": "hsl(0, 0%, 4%)",
+        "cmyk": "cmyk(0%, 0%, 0%, 96%)",
+        "lum": "0.003"
+      },
+      {
+        "code": "Neutral - 2",
+        "hex": "#121212",
+        "rgbString": "rgb(18, 18, 18)",
+        "oklch": "oklch(18.152% 0 none)",
+        "hsl": "hsl(0, 0%, 7%)",
+        "cmyk": "cmyk(0%, 0%, 0%, 93%)",
+        "lum": "0.006"
+      },
+      {
+        "code": "Neutral - 3",
+        "hex": "#1F1F1F",
+        "rgbString": "rgb(31, 31, 31)",
+        "oklch": "oklch(23.759% 0 none)",
+        "hsl": "hsl(0, 0%, 12%)",
+        "cmyk": "cmyk(0%, 0%, 0%, 88%)",
+        "lum": "0.013"
+      },
+      {
+        "code": "Neutral - 4",
+        "hex": "#2B2B2B",
+        "rgbString": "rgb(43, 43, 43)",
+        "oklch": "oklch(29.05% 0 none)",
+        "hsl": "hsl(0, 0%, 17%)",
+        "cmyk": "cmyk(0%, 0%, 0%, 83%)",
+        "lum": "0.025"
+      },
+      {
+        "code": "Neutral - 5",
+        "hex": "#3D3D3D",
+        "rgbString": "rgb(61, 61, 61)",
+        "oklch": "oklch(36.079% 0 none)",
+        "hsl": "hsl(0, 0%, 24%)",
+        "cmyk": "cmyk(0%, 0%, 0%, 76%)",
+        "lum": "0.047"
+      },
+      {
+        "code": "Neutral - 6",
+        "hex": "#4F4F4F",
+        "rgbString": "rgb(79, 79, 79)",
+        "oklch": "oklch(42.779% 0 none)",
+        "hsl": "hsl(0, 0%, 31%)",
+        "cmyk": "cmyk(0%, 0%, 0%, 69%)",
+        "lum": "0.078"
+      },
+      {
+        "code": "Neutral - 7",
+        "hex": "#636363",
+        "rgbString": "rgb(99, 99, 99)",
+        "oklch": "oklch(50.129% 0 none)",
+        "hsl": "hsl(0, 0%, 39%)",
+        "cmyk": "cmyk(0%, 0%, 0%, 61%)",
+        "lum": "0.126"
+      },
+      {
+        "code": "Neutral - 8",
+        "hex": "#858585",
+        "rgbString": "rgb(133, 133, 133)",
+        "oklch": "oklch(61.536% 0 none)",
+        "hsl": "hsl(0, 0%, 52%)",
+        "cmyk": "cmyk(0%, 0%, 0%, 48%)",
+        "lum": "0.233"
+      },
+      {
+        "code": "Neutral - 9",
+        "hex": "#A8A8A8",
+        "rgbString": "rgb(168, 168, 168)",
+        "oklch": "oklch(73.256% 0 none)",
+        "hsl": "hsl(0, 0%, 66%)",
+        "cmyk": "cmyk(0%, 0%, 0%, 34%)",
+        "lum": "0.393"
+      },
+      {
+        "code": "Neutral - 10",
+        "hex": "#C9C9C9",
+        "rgbString": "rgb(201, 201, 201)",
+        "oklch": "oklch(83.73% 0 none)",
+        "hsl": "hsl(0, 0%, 79%)",
+        "cmyk": "cmyk(0%, 0%, 0%, 21%)",
+        "lum": "0.587"
+      },
+      {
+        "code": "Neutral - 11",
+        "hex": "#E3E3E3",
+        "rgbString": "rgb(227, 227, 227)",
+        "oklch": "oklch(91.568% 0 none)",
+        "hsl": "hsl(0, 0%, 89%)",
+        "cmyk": "cmyk(0%, 0%, 0%, 11%)",
+        "lum": "0.768"
+      },
+      {
+        "code": "Neutral - 12",
+        "hex": "#F0F0F0",
+        "rgbString": "rgb(240, 240, 240)",
+        "oklch": "oklch(95.424% 0 none)",
+        "hsl": "hsl(0, 0%, 94%)",
+        "cmyk": "cmyk(0%, 0%, 0%, 6%)",
+        "lum": "0.869"
+      },
+      {
+        "code": "Neutral - 13",
+        "hex": "#F7F7F7",
+        "rgbString": "rgb(247, 247, 247)",
+        "oklch": "oklch(97.719% 0 none)",
+        "hsl": "hsl(0, 0%, 97%)",
+        "cmyk": "cmyk(0%, 0%, 0%, 3%)",
+        "lum": "0.933"
+      }
+    ]
   }
 ]

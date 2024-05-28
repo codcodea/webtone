@@ -1,6 +1,6 @@
 import { For, createSignal, Show, createEffect, onMount } from "solid-js"
 
-import { getColorsState, clearColorsLS, setClones, setColorsState } from "../lib/ls"
+import { getColorsState, handleClearAll } from "../lib/ls"
 
 import Oswald from "~/components/oswald"
 import WebtoneChip from "~/components/chip"
@@ -30,51 +30,31 @@ const Spectra = () => {
         isPortal() ? (handleBlur(), addKeys()) : (handleNormal(), removeKeys())
 
         if (activeDotIndex() || getColorsState()) {
-            clearDots()
-            setActiveDotCSS(activeDotIndex())
+            handleCssClearDots()
+            handleCssActiveDots(activeDotIndex())
         }
     })
 
     const { addKeys, removeKeys } = handleKeys(setPortal, portal)
 
-    const clearDots = () => {
-        const dots = document.querySelectorAll(".dot")
-        dots.forEach((dot) => {
-            dot.classList.remove("active")
-        })
-    }
-
-    const setActiveDotCSS = (i: number) => {
-        const dots = document.querySelectorAll(".dot")
-        dots[i].classList.add("active")
-
-        getColorsState().forEach((color) => {
-            if (color.index != i) {
-                dots[color.index]?.classList.add("has-selected")
-            } else {
-                dots[color.index]?.classList.remove("has-selected")
-            }
-        })
-    }
-
     const handleOswaldClick = (e: MouseEvent) => {
         const t = e.target as HTMLElement
-        clearDots()
+        handleCssClearDots()
         t.classList.add("active")
         const i = Number(t.getAttribute("data-index"))
         setActiveDotIndex(i)
     }
 
     const handleTrash = () => {
-        clearColorsLS()
-        setColorsState([])
-        setClones([])
+        handleClearAll()
+        handleCssAnimation()
+    }
 
+    const handleCssAnimation = () => {
         const dots = document.querySelectorAll(".dot")
         const currentIndex = activeDotIndex()
 
         const dotsArray = Array.from(dots)
-
         const rearrangedDots = [...dotsArray.slice(currentIndex + 1), ...dotsArray.slice(0, currentIndex + 1)]
 
         rearrangedDots.forEach((dot, index) => {
@@ -92,13 +72,37 @@ const Spectra = () => {
         })
     }
 
+    const handleCssActiveDots = (i: number) => {
+        const dots = document.querySelectorAll(".dot")
+        dots[i].classList.add("active")
+
+        getColorsState().forEach((color) => {
+            const j = Number(color.index)
+            if (j != i) {
+                dots[j]?.classList.add("has-selected")
+            } else {
+                dots[j]?.classList.remove("has-selected")
+            }
+        })
+    }
+
+    const handleCssClearDots = () => {
+        const dots = document.querySelectorAll(".dot")
+        dots.forEach((dot) => {
+            dot.classList.remove("active")
+        })
+    }
+
     return (
         <>
             <main class="container mx-auto mb-28 min-h-screen max-w-7xl">
                 <section class="mt-28 flex flex-col items-center justify-center">
                     <Oswald handleOswaldClick={handleOswaldClick} />
                     <div class="mt-10 flex items-center justify-center ">
-                        <button class="border border-neutral-700 uppercase hover:shadow px-3 py-1 text-xs" onClick={handleTrash}>
+                        <button
+                            class="border border-neutral-700 px-3 py-1 text-xs uppercase hover:shadow"
+                            onClick={handleTrash}
+                        >
                             Clear
                         </button>
                     </div>
@@ -106,17 +110,36 @@ const Spectra = () => {
 
                 <section class="mt-12 flex w-full flex-col items-center justify-center">
                     <section class="w-11/12" data-palette={activeDotIndex()}>
-                        <h1 class="mb-6 mt-12 text-center text-2xl text-neutral-800">{chips()[activeDotIndex()].name}</h1>
+                        <h1 class="mb-6 mt-12 text-center text-2xl text-neutral-800">
+                            {chips()[activeDotIndex()].name}
+                        </h1>
                         <article
                             onClick={handleClick}
                             class="my-2 flex flex-row flex-wrap items-center justify-center gap-x-1"
                         >
                             <For each={chips()[activeDotIndex()].arr}>
-                                {(chip, i) => <WebtoneChip code={chip.code} rgb={chip.rgbString} i={activeDotIndex} />}
+                                {(chip, i) => <WebtoneChip chip={chip} index={i()} hasSelect={true}/>}
                             </For>
                         </article>
                     </section>
                 </section>
+
+                <section class="mt-12 flex w-full flex-col items-center justify-center">
+                    <section class="w-11/12" data-palette={40}>
+                        <h1 class="mb-6 mt-12 text-center text-2xl text-neutral-800">
+                            {chips()[40].name}
+                        </h1>
+                        <article
+                            onClick={handleClick}
+                            class="my-2 flex flex-row flex-wrap items-center justify-center gap-x-1"
+                        >
+                            <For each={chips()[40].arr}>
+                                {(chip, i) => <WebtoneChip chip={chip} index={i()} hasSelect={true}/>}
+                            </For>
+                        </article>
+                    </section>
+                </section>
+
                 <Show when={isPortal()}>
                     <PortalComponent portal={portal} active={webtone} setPortal={setPortal} />
                 </Show>

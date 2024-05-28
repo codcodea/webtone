@@ -18,7 +18,16 @@ import {
     ContextMenuTrigger,
 } from "~/components/ui/context-menu"
 
-import { showColor, showName, setShowColor, setShowName } from "~/state/contextmenu"
+import {
+    showColor,
+    showName,
+    setShowColor,
+    setShowName,
+    showHex,
+    setShowHex,
+    showLum,
+    setShowLum,
+} from "~/state/contextmenu"
 import { isRightClick } from "~/state/contextmenu"
 
 import { session } from "~/lib/session"
@@ -65,6 +74,12 @@ function ContextMenuDemo(props) {
                     </ContextMenuCheckboxItem>
                     <ContextMenuCheckboxItem checked={showName()} onChange={setShowName}>
                         Show Color Name
+                    </ContextMenuCheckboxItem>
+                    <ContextMenuCheckboxItem checked={showHex()} onChange={setShowHex}>
+                        Show Hex
+                    </ContextMenuCheckboxItem>
+                    <ContextMenuCheckboxItem checked={showLum()} onChange={setShowLum}>
+                        Show Luminocity
                     </ContextMenuCheckboxItem>
                 </ContextMenuContent>
             </ContextMenuPortal>

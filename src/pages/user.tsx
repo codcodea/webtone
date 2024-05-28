@@ -27,12 +27,16 @@ import {
 } from "../lib/ls/index.tsx"
 
 import { createEffect, createSignal, For, onMount, untrack, Show } from "solid-js"
-import type { Clone } from "../lib/ls/index.tsx"
+import type { WebtoneItemClone } from "../lib/ls/index.tsx"
+import type { WebtoneItem } from "../state/webtone.tsx"
+import { handleClearAll } from "../lib/ls/index.tsx"
 
 import ContextMenuDemo from "../components/context/index.tsx"
-import { isRightClick, setIsRightClick, showColor, showName } from "../state/contextmenu"
+import { isRightClick, setIsRightClick, showColor, showName, showHex, showLum } from "../state/contextmenu"
 
 import { session } from "../lib/session/index.tsx"
+
+import { textColor } from "~/handlers/color/index.tsx"
 
 type Position = {
     x: number
@@ -50,8 +54,10 @@ const User = () => {
     let leftColumn: HTMLDivElement
     let workarea: HTMLDivElement
 
+    const [isDragging, setIsDragging] = createSignal<WebtoneChip>(null)
+
     // Sortable and clone states
-    const cIds = () => getColorsState().map((c) => c.name)
+    const cIds = () => getColorsState().map((c) => c.code)
 
     // Overlay temp position
     const [overlayPos, setOverlayPos] = createSignal<Position>({ x: 0, y: 0 })
@@ -82,19 +88,18 @@ const User = () => {
                     id: "clone-" + id,
                     dx: overlayPos().x,
                     dy: overlayPos().y,
-                    color: draggable.data.color,
                     width: 220 + "px",
                     height: 220 + "px",
-                    name: draggable.data.name,
-                } as Clone
+                    ...draggable.data,
+                } as WebtoneItemClone
 
                 setClones([...clones(), clone])
                 session.addAction("dr")
             }
         } else if (draggable && droppable) {
             const cSort = getColorsState()
-            const fIndex = cSort.findIndex((c) => c.color === draggable.data.color)
-            const tIndex = cSort.findIndex((c) => c.color === droppable.data.color)
+            const fIndex = cSort.findIndex((c) => c.code === draggable.data.code)
+            const tIndex = cSort.findIndex((c) => c.code === droppable.data.code)
 
             if (fIndex !== tIndex) {
                 const updatedSort = cSort.slice()
@@ -122,9 +127,7 @@ const User = () => {
     }
 
     const handleTrash = () => {
-        clearColorsLS()
-        setColorsState([])
-        setClones([])
+        handleClearAll()
     }
 
     const handleDelete = (e) => {
@@ -133,15 +136,15 @@ const User = () => {
             setClones((prev) => prev.filter((clone) => clone.id !== id))
             session.addAction("dl")
         } else if (id) {
-            setClones((prev) => prev.filter((clone) => clone.color !== id))
-            isSelectedState().delete(getColorsState().find((c) => c.color === id).name)
-            setColorsState((prev) => prev.filter((color) => color.color !== id))
+            setClones((prev) => prev.filter((clone) => clone.rgbString !== id))
+            isSelectedState().delete(getColorsState().find((c) => c.rgbString === id).code)
+            setColorsState((prev) => prev.filter((color) => color.rgbString !== id))
             session.addAction("dl")
         }
     }
 
     const handleCloneSort = (id: string, dir: string) => {
-        setClones((prev: Clone[]) => {
+        setClones((prev: WebtoneItemClone[]) => {
             const index = prev.findIndex((c) => c.id === id)
             const clone = prev[index]
             const newIndex = dir === "up" ? index + 1 : index - 1
@@ -166,7 +169,7 @@ const User = () => {
                         <ContextMenuDemo handleDelete={handleDelete} handleCloneSort={handleCloneSort} showZ={false}>
                             <div class="space-y-3 ">
                                 <SortableProvider ids={cIds()}>
-                                    <For each={getColorsState()}>{(item) => <ColorCard {...item} />}</For>
+                                    <For each={getColorsState()}>{(chip) => <WebtoneSortDraggable chip={chip} />}</For>
                                 </SortableProvider>
                             </div>
                         </ContextMenuDemo>
@@ -175,7 +178,7 @@ const User = () => {
                                 <div
                                     id="overlay"
                                     class={cloneStyle}
-                                    style={{ "background-color": draggable?.data.color }}
+                                    style={{ "background-color": draggable?.data.rgbString }}
                                 >
                                     <div class="flex flex-1 items-center justify-center"></div>
                                     {/* <div class="hidden z-50 flex h-1/4 w-full flex-col items-center justify-center bg-white px-2.5 text-base">
@@ -242,13 +245,12 @@ const DropZone = (props: DropZoneProps) => {
 }
 
 // ColorCard is the draggable (sortable) item
-type ColorCardProps = {
-    name: string
-    color: string
+type DrProps = {
+    chip: WebtoneItem
 }
 
-const ColorCard = (props: ColorCardProps) => {
-    const sortable = createSortable(props.name, { color: props.color, name: props.name })
+const WebtoneSortDraggable = (props: DrProps) => {
+    const sortable = createSortable(props.chip.code, props.chip)
     const [state] = useDragDropContext()
     return (
         <div
@@ -258,8 +260,8 @@ const ColorCard = (props: ColorCardProps) => {
                 sortable.isActiveDraggable && "opacity-25",
                 !!state.active.draggable && "transition-transform"
             )}
-            onContextMenu={() => setIsRightClick(props.color)}
-            style={{ "background-color": props.color }}
+            onContextMenu={() => setIsRightClick(props.chip.code)}
+            style={{ "background-color": props.chip.rgbString }}
         ></div>
     )
 }
@@ -274,7 +276,8 @@ const Workarea = (props: WorkareaProps) => {
     // A clone is made instead of moving the Sortable
     // The clone is then draggable and resizable
     // And stored in state and local storage
-    const DraggableClone = (props: Clone) => {
+    const DraggableClone = (props: WebtoneItemClone) => {
+        const style = { color: textColor(props.hex) }
         return (
             <div
                 id={props.id}
@@ -282,28 +285,30 @@ const Workarea = (props: WorkareaProps) => {
                 data-dy={props.dy}
                 class={cloneStyle}
                 style={{
-                    "background-color": props.color,
+                    "background-color": props.rgbString,
                     transform: `translate(${props.dx}px, ${props.dy}px)`,
                     width: props.width,
                     height: props.height,
                 }}
                 onContextMenu={() => setIsRightClick(props.id)}
             >
-                <div class="flex flex-1 items-center justify-center"></div>
+                <div class="flex flex-1 flex-col items-center justify-center">
+                    <Show when={showHex()}>
+                        <p style={style}>{props.hex}</p>
+                    </Show>
+                    <Show when={showLum()}>
+                        <p style={style}>{props.lum}</p>
+                    </Show>
+                </div>
                 <div
                     class={cn(
                         "flex w-full flex-col items-start justify-center bg-white px-2.5 text-base",
                         showColor() || showName() ? "py-1.5" : "py-0"
                     )}
                 >
-                    <Show when={showColor() && props.name.includes("/")}>
-                        <p class="text-base uppercase">WEBTONE</p>
-                    </Show>
-                    <Show when={showColor() && !props.name.includes("/")}>
-                        <p class="text-base uppercase">CUSTOM</p>
-                    </Show>
+                    <p class="text-base uppercase">WEBTONE</p>
                     <Show when={showName()}>
-                        <p class="truncate text-sm">{props.name}</p>
+                        <p class="truncate text-sm">{props.code}</p>
                     </Show>
                 </div>
             </div>
@@ -335,7 +340,7 @@ const Workarea = (props: WorkareaProps) => {
                         const x = parseFloat(translate.split(",")[0].split("(")[1])
                         const y = parseFloat(translate.split(",")[1].split(")")[0])
 
-                        props.setClones((prev: Clone[]) => {
+                        props.setClones((prev: WebtoneItemClone[]) => {
                             return prev.map((c) => {
                                 if (c.id == event.target.id) {
                                     c.dx = x
@@ -364,7 +369,7 @@ const Workarea = (props: WorkareaProps) => {
                         Object.assign(event.target.dataset, { x, y })
                     },
                     end(event) {
-                        props.setClones((prev: Clone[]) => {
+                        props.setClones((prev: WebtoneItemClone[]) => {
                             return prev.map((c) => {
                                 if (c.id == event.target.id) {
                                     c.width = event.target.style.width

@@ -30,7 +30,7 @@ const setEffects = (pickedColor: string, currentHue: string, isFirst: boolean): 
     else setHoverColor(text, "0")
 }
 
-const textColor = (pickedColor: string): string => {
+export const textColor = (pickedColor: string): string => {
     
     const luminance = (hex: string) => {
         const rgb = hexToRgb(hex);

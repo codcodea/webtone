@@ -1,20 +1,26 @@
-import { lookupWebtoneIndex } from "~/state/webtone"
 
+
+import { WebtoneItem } from "~/state/webtone"
+
+type CustomItem = {
+    code: string
+    hex: string
+}
 
 type SavedColor = {
     index: number | undefined
     name: string
     color: string
+    hex: string
+    lum: string
 }
 
-type Clone = {
-    id: string
+interface WebtoneItemClone extends WebtoneItem {
+    id: string // clone-<random_id>
     dx: number
     dy: number
-    color: string
     width: string
     height: string
-    name: string
 }
 
 type Selected = Set<string>
@@ -23,39 +29,37 @@ import { createSignal } from "solid-js"
 import { session } from "~/lib/session"
 
 // States
-const [getColorsState, setColorsState] = createSignal<SavedColor[]>([])
+const [getColorsState, setColorsState] = createSignal<WebtoneItem[]>([])
 const [isSelectedState, setIsSelectedState] = createSignal<Selected>(new Set()) // for efficient lookup
-const [clones, setClones] = createSignal<Clone[]>([])
+const [clones, setClones] = createSignal<WebtoneItemClone[]>([])
 
 // Local storage
 // A color is an object with a name and a color
 // A clone is an object with a name, color, width, height, dx, dy, and id, dragged to the canvas
 
 const initColors = () => {
-    let colors: SavedColor[] = JSON.parse(localStorage.getItem("colors") || "[]")
+    let colors: WebtoneItem[] = JSON.parse(localStorage.getItem("colors") || "[]")
     setColorsState(colors)
-    setIsSelectedState(new Set(colors.map((c) => c.name)))
+    setIsSelectedState(new Set(colors.map((c) => c.code)))
 }
 
-const addColorLS = (obj: SavedColor) => {
+const addColorLS = (obj: WebtoneItem) => {
+    // TODO: Nowboth CustomItem and WebtoneItem
+    let colors: WebtoneItem[] = JSON.parse(localStorage.getItem("colors") || "[]")
 
-    if(obj.index === -1) {
-        obj.index = lookupWebtoneIndex(obj.name)
-    }
-
-    const inColor = obj.color.trim()
-
-    let colors: SavedColor[] = JSON.parse(localStorage.getItem("colors") || "[]")
-    // check if hex is already in the array
-    if (colors.some((c) => c.color === inColor)) {
+    // return if the color is already in the list
+    if (colors.some((c) => c.hex === obj.hex)) {
         return
     }
 
-    colors.push({ name: obj.name, color: inColor, index: obj.index})
+    colors.push(obj)
     localStorage.setItem("colors", JSON.stringify(colors))
 
+    // set state
     setColorsState(colors)
-    const isSelected = colors.filter(c => c.index != undefined).map((c) => c.name)
+
+    // set isSelected state
+    const isSelected = colors.filter((c) => c.cmyk != undefined).map((c) => c.code) // cmyk does not exist in CutomItem
     setIsSelectedState(new Set<string>(isSelected))
     session.addAction("add")
 }
@@ -67,31 +71,36 @@ const clearColorsLS = () => {
     session.addAction("cl")
 }
 
-const rmColorLS = (obj: SavedColor) => {
-    let colors: SavedColor[] = JSON.parse(localStorage.getItem("colors") || "[]")
-    colors = colors.filter((color) => color.color !== obj.color)
-
+const rmColorLS = (code: string) => {
+    let colors: WebtoneItem[] = JSON.parse(localStorage.getItem("colors") || "[]")
+    colors = colors.filter((color) => color.code !== code)
     localStorage.setItem("colors", JSON.stringify(colors))
 
     setColorsState(colors)
-    setIsSelectedState(new Set(colors.map((c) => c.name)))
-    setClones((prev) => prev.filter((clone) => clone.name !== obj.name))
+    setIsSelectedState(new Set(colors.map((c) => c.code)))
+    setClones((prev) => prev.filter((clone) => clone.code !== code))
     addClonesLS(clones())
     session.addAction("rm")
 }
 
-const saveColorSortLS = (colors: SavedColor[]) => {
+const saveColorSortLS = (colors: WebtoneItem[]) => {
     localStorage.setItem("colors", JSON.stringify(colors))
 }
 
 // Clones
-const addClonesLS = (clones: Clone[]) => {
+const addClonesLS = (clones: WebtoneItemClone[]) => {
     localStorage.setItem("clones", JSON.stringify(clones))
 }
 
-const getClonesLS = (): Clone[] => {
+const getClonesLS = (): WebtoneItemClone[] => {
     const colors = JSON.parse(localStorage.getItem("clones") || "[]")
     return colors
+}
+
+const handleClearAll = () => {
+    clearColorsLS()
+    setColorsState([])
+    setClones([])
 }
 
 export {
@@ -108,5 +117,6 @@ export {
     setIsSelectedState,
     clones,
     setClones,
+    handleClearAll,
 }
-export type { SavedColor, Clone }
+export type { SavedColor, WebtoneItemClone }

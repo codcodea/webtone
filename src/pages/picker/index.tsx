@@ -7,14 +7,14 @@ import type { WebtoneItem } from "~/state/webtone"
 import { addColorLS } from "~/lib/ls"
 
 import { env } from "~/lib/api"
+import { getWebtone } from "~/state/webtone"
+
 
 // --------------------------------------------------------
 
-
-
 const Chrome = () => {
     const [webtone, setWebtone] = createSignal<WebtoneItem>(null)
-    const [color, setColor] = createSignal<string>("#e8e4da")
+    const [hex, setHex] = createSignal<string>("#e8e4da")
     const [isPortal, setPortal] = createSignal(false)
 
     let portal: HTMLDivElement
@@ -27,7 +27,7 @@ const Chrome = () => {
 
     onMount(() => {
         initHtmx()
-        hiddenEl.value = color()
+        hiddenEl.value = hex()
         pickerEl.addEventListener("click", handleColorPicker)
     })
 
@@ -43,14 +43,14 @@ const Chrome = () => {
     const { initHtmx, cleanupHtmx } = newHtmx()
     const { handleKeys, removeKeys } = newKeys(setPortal, portal)
 
-    const handleColorPicker = async (e: Event) => {
+    const handleColorPicker = async () => {
         resultEl.style.opacity = "0.4"
         try {
-            const eD = new EyeDropper()
-            const result = await eD.open({ signal: abortController.signal })
+            const picker = new EyeDropper()
+            const result = await picker.open({ signal: abortController.signal })
             const color = result.sRGBHex
             hiddenEl.value = color
-            setColor(color)
+            setHex(color)
             window.htmx.trigger("#hidden-input", "send-color")
         } catch (e) {
             resultEl.style.opacity = "1"
@@ -60,22 +60,19 @@ const Chrome = () => {
     const handleClick = (e: MouseEvent) => {
         const t = e.target as HTMLElement
         const icon = t.closest(".add-icon")
-
         if (!icon) return
 
         icon.classList.add("animate")
-        setTimeout(() => {
-            icon.classList.remove("animate")
-        }, 210)
+        setTimeout(() => icon.classList.remove("animate"), 210)
 
         const color = icon.parentElement.dataset.color
         const name = icon.parentElement.dataset.name
         const isWebtone = Boolean(icon.parentElement.dataset.webtone)
 
         if (isWebtone) {
-            addColorLS({ name, color, index: -1 })
+            addColorLS(getWebtone(name))
         } else {
-            addColorLS({ name, color, index: undefined })
+            //addColorLS({ name, color })
         }
         return
     }
@@ -165,8 +162,7 @@ const Chrome = () => {
                 //setJsonData(window.jsonData)
             }, 100)
 
-            
-            handleColor(color(), true)
+            handleColor(hex(), true)
         }
 
         return { initHtmx, cleanupHtmx }
