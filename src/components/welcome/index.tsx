@@ -1,5 +1,5 @@
 const Welcome = () => {
-    const h1 = "text-4xl font-bold mb-4"
+    const h1 = "text-3xl font-bold mb-4"
     const h2 = "text-2xl font-bold mt-8"
     const h3 = "mt-12 text-lg italic"
     const p = "mt-2 text-lg"

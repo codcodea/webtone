@@ -2,3 +2,4 @@
 /src/lib/ncs
 /src/dev
 /node_modules
+/src/.env

@@ -6,9 +6,16 @@ import { getColorsState } from "~/lib/ls"
 const Toolbar = () => {
     return (
         <div class="z-50 flex h-full w-full items-center justify-center gap-6  text-neutral-800">
-            <div class="w-24 text-base">WEBTONE</div>
+            <div class="relative w-24 text-base">
+                WEBTONE
+                <div class="absolute -left-4 -top-[4px] h-8 w-2 overflow-hidden">
+                    {/* <span class="absolute top-1 h-3 w-3 bg-[#ff7830] " />
+                            <span class="absolute top-4 h-3 w-3 bg-[#1f1f1f] " /> */}
+                    <span class="absolute top-1 h-[24px] w-3 bg-[#222222]" />
+                </div>
+            </div>
 
-            <div class="flex flex-1 items-center justify-center gap-6 text-base tracking-wide">
+            <div class="flex flex-1 items-center justify-center gap-6 text-sm uppercase tracking-wide">
                 <A href="/">Home</A>
                 <A href="/spectra">Spectra</A>
                 <Show when={testBrowerCompability() && !isMobile()}>
@@ -17,7 +24,7 @@ const Toolbar = () => {
                 <div class="relative">
                     <A href="/canvas">Canvas</A>
                     <Show when={getColorsState()?.length > 0}>
-                        <span class="absolute -right-[25px] top-[2px] flex h-5 w-5 items-center justify-center rounded-full border border-neutral-500 bg-neutral-300 text-[10px] font-bold opacity-80">
+                        <span class="absolute -right-[23px] top-[3px] flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#151515ee] text-[10px] font-bold text-white opacity-80">
                             {getColorsState().length}
                         </span>
                     </Show>

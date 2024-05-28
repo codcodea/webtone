@@ -17,7 +17,7 @@ const Webtone = () => {
     const [active, setActive] = createSignal<WebtoneItem>(null)
     const [isPortal, setPortal] = createSignal(false)
 
-    onMount(() => {
+    onMount(async () => {
         session.addPage("pw")
     })
 
@@ -33,7 +33,7 @@ const Webtone = () => {
     return (
         <main class="container mx-auto mb-28 min-h-screen max-w-7xl">
             <Welcome />
-            <section onClick={handleClick} class="mt-16 flex w-full flex-col items-center justify-center ">
+            <section onClick={handleClick} class="mt-16 flex w-full flex-col items-center justify-center">
                 <For each={chips()}>
                     {(hue, index) => {
                         return (

@@ -33,7 +33,7 @@ const Layout = (props: LayoutProps) => {
                 ref={header}
                 id="header"
                 class={cn(
-                    "opacity-1 invisible h-16 border-b border-neutral-300 bg-white transition-all duration-200 lg:visible lg:block  lg:shadow",
+                    "opacity-1 invisible h-20 border-b border-neutral-300 bg-white transition-all duration-200 lg:visible lg:block  lg:shadow",
                     location.pathname != "/user" ? "sticky top-0 z-10 " : ""
                 )}
             >

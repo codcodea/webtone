@@ -42,7 +42,7 @@ const PortalComponent = (props: PortalProps) => {
                             <p class="text-sm">lum: {props.active().lum}</p>
                         </div>
                         <div class="flex h-1/4 w-full flex-col justify-center bg-white px-6 py-3 text-neutral-900">
-                            <p class="">WEBTONE</p>
+                            <p class="text-base tracking-wide">WEBTONE</p>
                             <p class="">{props.active().code}</p>
                         </div>
                     </div>
