@@ -35,7 +35,7 @@ const Spectra = () => {
         }
     })
 
-    const { addKeys, removeKeys } = handleKeys(setPortal, portal)
+    const { addKeys, removeKeys } = handleKeys(setPortal)
 
     const handleOswaldClick = (e: MouseEvent) => {
         const t = e.target as HTMLElement
@@ -95,7 +95,7 @@ const Spectra = () => {
 
     return (
         <>
-            <main class="container mx-auto mb-28 min-h-screen max-w-7xl">
+            <main class="container mx-auto mb-28 min-h-screen max-w-6xl">
                 <section class="mt-28 flex flex-col items-center justify-center">
                     <Oswald handleOswaldClick={handleOswaldClick} />
                     <div class="mt-10 flex items-center justify-center ">
@@ -141,7 +141,7 @@ const Spectra = () => {
                 </section>
 
                 <Show when={isPortal()}>
-                    <PortalComponent portal={portal} active={webtone} setPortal={setPortal} />
+                    <PortalComponent ref={portal} active={webtone} setPortal={setPortal} />
                 </Show>
             </main>
             <footer class="h-96 w-full bg-white"></footer>

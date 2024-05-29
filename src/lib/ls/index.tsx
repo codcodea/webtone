@@ -48,7 +48,7 @@ const addColorLS = (obj: WebtoneItem) => {
     let colors: WebtoneItem[] = JSON.parse(localStorage.getItem("colors") || "[]")
 
     // return if the color is already in the list
-    if (colors.some((c) => c.hex === obj.hex)) {
+    if (colors.some((c) => c.code === obj.code)) {
         return
     }
 

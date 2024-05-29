@@ -17,7 +17,7 @@ const PortalComponent = (props: PortalProps) => {
     return (
         <Portal>
             <section
-                class="fixed left-[50%] top-[50%] z-50 flex h-3/5 w-3/5 -translate-x-1/2 -translate-y-1/2 transform flex-col items-center justify-center border border-neutral-500 bg-neutral-800 px-6 shadow-lg"
+                class="fixed left-[50%] top-[50%] z-50 flex h-3/5  min-w-[800px] min-h-[600px] w-3/5 -translate-x-1/2 -translate-y-1/2 transform flex-col items-center justify-center border border-neutral-500 bg-neutral-800 px-6 shadow-lg"
                 id="portal"
             >
                 <button
@@ -39,12 +39,6 @@ const PortalComponent = (props: PortalProps) => {
                                 color: checkContrast(props.active().hex),
                             }}
                         >
-                            {/* <p class="text-sm">{props.active().hex} </p>
-                            <p class="text-sm">{props.active().rgbString}</p>
-                            <p class="text-sm">{props.active().oklch}</p>
-                            <p class="text-sm">{props.active().cmyk}</p>
-                            <p class="text-sm">{props.active().hsl}</p>
-                            <p class="text-sm">lum: {props.active().lum}</p> */}
                         </div>
                         <div class="flex h-1/4 w-full flex-col justify-center bg-white px-6 py-3 text-neutral-900">
                             <p class="text-base tracking-wide">WEBTONE</p>

@@ -6,9 +6,7 @@ import Welcome from "~/components/welcome"
 import PortalComponent from "~/components/portal"
 
 import type { Webtone, WebtoneItem } from "~/state/webtone"
-
 import { handleKeys, handleSelect } from "./handlers"
-
 import { session } from "~/lib/session"
 
 const Webtone = () => {
@@ -29,7 +27,7 @@ const Webtone = () => {
     const handleClick = handleSelect(setActive, setPortal)
 
     return (
-        <main class="container mx-auto mb-28 min-h-screen max-w-7xl">
+        <main class="container mx-auto mb-28 min-h-screen max-w-6xl">
             <Welcome />
             <section onClick={handleClick} class="mt-16 flex w-full flex-col items-center justify-center">
                 <For each={chips()}>

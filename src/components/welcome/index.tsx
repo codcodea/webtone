@@ -101,7 +101,7 @@ const Welcome = () => {
                         <tr class="border-t">
                             <td class=" py-2 italic">v0.812</td>
                             <td class=" py-2">May 21, 2024</td>
-                            <td class=" py-2">Prefix, color names.</td>
+                            <td class=" py-2">System of 14 neutrals and 2880 colors, of which 61 overlap in sRGB </td>
                         </tr>
                         <tr class="border-t">
                             <td class=" py-2 italic">v0.813</td>

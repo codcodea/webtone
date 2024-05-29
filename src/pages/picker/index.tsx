@@ -1,47 +1,45 @@
-import { createSignal, onCleanup, onMount, createEffect, Setter } from "solid-js"
+import { createSignal, onCleanup, onMount} from "solid-js"
 
 import { cn } from "../../lib/merge"
 
 import { handleColor } from "~/handlers/color"
-import type { WebtoneItem } from "~/state/webtone"
 import { addColorLS } from "~/lib/ls"
-
 import { env } from "~/lib/api"
 import { getWebtone } from "~/state/webtone"
-
 
 // --------------------------------------------------------
 
 const Chrome = () => {
-    const [webtone, setWebtone] = createSignal<WebtoneItem>(null)
     const [hex, setHex] = createSignal<string>("#e8e4da")
-    const [isPortal, setPortal] = createSignal(false)
-
-    let portal: HTMLDivElement
     let pickerEl: HTMLButtonElement
     let resultEl: HTMLDivElement
     let hiddenEl: HTMLInputElement
-    let notifyEl: HTMLSpanElement
-
+  
     const abortController = new AbortController()
 
     onMount(() => {
         initHtmx()
         hiddenEl.value = hex()
         pickerEl.addEventListener("click", handleColorPicker)
+        addEventListener("keydown", handleKeys)
     })
+
+    const handleKeys = (e: KeyboardEvent) => {
+        if(e.key === "s") {
+           const icon = document.querySelector(".add-icon") as HTMLElement
+           if(!icon) return
+           icon.click()
+        } else if(e.key === "d") {
+            pickerEl.click()
+        }
+    }
 
     onCleanup(() => {
         pickerEl.removeEventListener("click", handleColorPicker)
         cleanupHtmx()
     })
 
-    createEffect(() => {
-        isPortal() ? handleKeys() : removeKeys()
-    })
-
     const { initHtmx, cleanupHtmx } = newHtmx()
-    const { handleKeys, removeKeys } = newKeys(setPortal, portal)
 
     const handleColorPicker = async () => {
         resultEl.style.opacity = "0.4"
@@ -65,10 +63,9 @@ const Chrome = () => {
         icon.classList.add("animate")
         setTimeout(() => icon.classList.remove("animate"), 210)
 
-        const color = icon.parentElement.dataset.color
         const name = icon.parentElement.dataset.name
         const isWebtone = Boolean(icon.parentElement.dataset.webtone)
-
+  
         if (isWebtone) {
             addColorLS(getWebtone(name))
         } else {
@@ -171,31 +168,4 @@ const Chrome = () => {
 
 export default Chrome
 
-function newKeys(setIsPortal: Setter<boolean>, portal: HTMLDivElement) {
-    const handleKeys = () => {
-        addEventListener("keydown", handleEscKey)
-        document.getElementById("root").style.filter = "blur(5px)"
-        setTimeout(() => {
-            addEventListener("click", handleClickOutside)
-        }, 0)
-    }
 
-    const removeKeys = () => {
-        removeEventListener("keydown", handleEscKey)
-        removeEventListener("click", handleClickOutside)
-        document.getElementById("root").style.filter = "none"
-    }
-
-    const handleEscKey = (e: KeyboardEvent) => {
-        if (e.key === "Escape" || e.key === "Enter" || e.key === "Backspace") {
-            setIsPortal(false)
-        }
-    }
-
-    const handleClickOutside = (e: MouseEvent) => {
-        if (e.target !== portal) {
-            setIsPortal(false)
-        }
-    }
-    return { handleKeys, removeKeys }
-}

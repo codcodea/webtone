@@ -27,7 +27,6 @@ export function handleKeys(setIsPortal: Setter<boolean>) {
     }
 
     const handleClickOutside = (e: MouseEvent) => {
-        
         const target = e.target as HTMLElement
         const portal = document.getElementById("portal") 
         if (target.closest("section") != portal) {
@@ -49,14 +48,12 @@ export function handleSelect(setActive : Setter<WebtoneItem>, setPortal : Setter
         // Find chip
         const grid = target.closest("section[data-palette]")
         if (!grid) return
+
         const palette = grid.getAttribute("data-palette")
         const chip = target.closest("div[data-webtone]")
-
         if (!chip) return
 
         const code = chip.getAttribute("data-webtone")
-        const index = chip.getAttribute("data-index")
-
         const obj = chips()[palette].arr.find((chip) => chip.code == code)
 
         // Portal
