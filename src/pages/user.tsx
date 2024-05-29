@@ -71,7 +71,6 @@ const User = () => {
     createEffect(() => {
         addClonesLS(clones())
         saveColorSortLS(getColorsState())
-        console.log(clones())
     })
 
     // onDragEnd

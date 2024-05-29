@@ -95,7 +95,7 @@ const Spectra = () => {
 
     return (
         <>
-            <main class="container mx-auto mb-28 min-h-screen max-w-6xl">
+            <main class="container mx-auto mb-28 min-h-screen max-w-7xl">
                 <section class="mt-28 flex flex-col items-center justify-center">
                     <Oswald handleOswaldClick={handleOswaldClick} />
                     <div class="mt-10 flex items-center justify-center ">

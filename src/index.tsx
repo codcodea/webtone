@@ -10,9 +10,7 @@ const User = lazy(() => import("./pages/user"))
 const Spectra = lazy(() => import("./pages/spectra"))
 const DownloadsPage = lazy(() => import("./pages/downloads"))
 const Picker = lazy(() => import("./pages/picker"))
-const Home = lazy(() => import("./dev/home"))
-
-
+// const Home = lazy(() => import("./dev/home"))
 
 import "./lib/session"
 
@@ -25,7 +23,7 @@ render(
             <Route path="/canvas" component={User} />
             <Route path="/picker" component={Picker} />
             <Route path="/downloads" component={DownloadsPage} />
-            <Route path="/dev" component={Home} />
+            {/* <Route path="/dev" component={Home} /> */}
         </Router>
     ),
     root!

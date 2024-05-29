@@ -27,7 +27,7 @@ const Webtone = () => {
     const handleClick = handleSelect(setActive, setPortal)
 
     return (
-        <main class="container mx-auto mb-28 min-h-screen max-w-6xl">
+        <main class="container mx-auto mb-28 min-h-screen max-w-7xl">
             <Welcome />
             <section onClick={handleClick} class="mt-16 flex w-full flex-col items-center justify-center">
                 <For each={chips()}>
