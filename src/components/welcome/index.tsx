@@ -3,13 +3,13 @@ const Welcome = () => {
     const h2 = "text-2xl font-bold mt-8"
     const h3 = "mt-12 text-lg italic"
     const p = "mt-2 text-lg"
-    const li = "mt-2 text-lg"
-    const span = "underline underline-offset-2"
+    const li = "mt-2 text-lg list-disc list-inside"
+    const span = "underline-offset-2 italic"
     const a = "text-blue-600 underline text-xs"
 
     return (
         <section class="flex w-full flex-col items-center justify-center text-white">
-            <section class="my-20 w-2/3  text-neutral-800">
+            <section class="my-0 lg:my-20 w-full lg:w-2/3  text-neutral-800">
                 <h1 class={h1}>WEBTONE</h1>
                 <p class={p}>
                     WEBTONE is a digital-first color system featuring 2880 curated colors specifically tailored for
