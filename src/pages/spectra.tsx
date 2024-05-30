@@ -33,6 +33,8 @@ const Spectra = () => {
             handleCssClearDots()
             handleCssActiveDots(activeDotIndex())
         }
+
+        isPortal() && session.addAction("po")
     })
 
     const { addKeys, removeKeys } = handleKeys(setPortal)
@@ -43,11 +45,13 @@ const Spectra = () => {
         t.classList.add("active")
         const i = Number(t.getAttribute("data-index"))
         setActiveDotIndex(i)
+        session.addAction("os" + i)
     }
 
     const handleTrash = () => {
         handleClearAll()
         handleCssAnimation()
+        session.addAction("cl")
     }
 
     const handleCssAnimation = () => {

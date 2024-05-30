@@ -4,7 +4,7 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "vite && tailwindcss --watch --jit",
+        "dev": "vite && tailwindcss --watch --jit ",
         "build": "vite build --emptyOutDir --minify",
         "preview": "vite preview"
     },

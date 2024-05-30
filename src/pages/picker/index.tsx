@@ -6,6 +6,7 @@ import { handleColor } from "~/handlers/color"
 import { addColorLS } from "~/lib/ls"
 import { env } from "~/lib/api"
 import { getWebtone } from "~/state/webtone"
+import { session } from "~/lib/session"
 
 // --------------------------------------------------------
 
@@ -50,6 +51,7 @@ const Chrome = () => {
             hiddenEl.value = color
             setHex(color)
             window.htmx.trigger("#hidden-input", "send-color")
+            session.addAction(color)
         } catch (e) {
             resultEl.style.opacity = "1"
         }
