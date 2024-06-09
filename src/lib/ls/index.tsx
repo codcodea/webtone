@@ -1,5 +1,3 @@
-
-
 import { WebtoneItem } from "~/state/webtone"
 
 type CustomItem = {
@@ -103,6 +101,15 @@ const handleClearAll = () => {
     setClones([])
 }
 
+const handleClearUnused = () => {
+    let colors: WebtoneItem[] = JSON.parse(localStorage.getItem("colors") || "[]")
+    const used = new Set(clones().map((c) => c.code))
+    colors = colors.filter((c) => used.has(c.code))
+    saveColorSortLS(colors)
+    setColorsState(colors)
+    setIsSelectedState(new Set(colors.map((c) => c.code)))
+}
+
 export {
     addColorLS,
     rmColorLS,
@@ -118,5 +125,6 @@ export {
     clones,
     setClones,
     handleClearAll,
+    handleClearUnused,
 }
 export type { SavedColor, WebtoneItemClone }

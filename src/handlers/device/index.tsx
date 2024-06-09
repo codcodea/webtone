@@ -47,7 +47,7 @@ function testBrowerCompability() {
             return userAgentData.some((item) => approved.includes(item))
         }
     }
-
+    
     if (navigator.userAgent) {
         const userAgentData = navigator.userAgent.match(/Chrome/i) || navigator.userAgent.match(/Edge/i)
         return !!userAgentData

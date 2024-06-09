@@ -7,6 +7,7 @@ import {
     createSortable,
     createDroppable,
     closestCenter,
+    mostIntersecting,
     DragEventHandler,
     useDragDropContext,
 } from "@thisbeyond/solid-dnd"
@@ -24,6 +25,7 @@ import {
     isSelectedState,
     clones,
     setClones,
+    handleClearUnused
 } from "../lib/ls/index.tsx"
 
 import { createEffect, createSignal, For, onMount, untrack, Show } from "solid-js"
@@ -124,8 +126,13 @@ const User = () => {
         })
     }
 
-    const handleTrash = () => {
-        handleClearAll()
+    const handleTrash = (e) => {
+        const isShift = e.shiftKey
+        if (isShift) {
+            handleClearUnused()
+        } else {
+            handleClearAll()
+        }
     }
 
     const handleDelete = (e) => {
@@ -136,7 +143,7 @@ const User = () => {
         } else if (id) {
             setClones((prev) => prev.filter((clone) => clone.code !== id))
             isSelectedState().delete(getColorsState().find((c) => c.code === id).code)
-            setColorsState((prev) => prev.filter((color) => color.code!== id))
+            setColorsState((prev) => prev.filter((color) => color.code !== id))
             session.addAction("dl")
         }
     }
@@ -157,7 +164,7 @@ const User = () => {
         <>
             <AltMain />
             <main class="scrollbar-hide content-area hidden grid-cols-12 overflow-hidden lg:visible lg:grid">
-                <DragDropProvider onDragEnd={onDragEnd} onDragMove={onDragMove} collisionDetector={closestCenter}>
+                <DragDropProvider onDragEnd={onDragEnd} onDragMove={onDragMove} collisionDetector={mostIntersecting}>
                     <DragDropSensors />
 
                     <section

@@ -1,4 +1,4 @@
-import { createSignal, onCleanup, onMount} from "solid-js"
+import { Show, createSignal, onCleanup, onMount } from "solid-js"
 
 import { cn } from "../../lib/merge"
 
@@ -12,25 +12,30 @@ import { session } from "~/lib/session"
 
 const Chrome = () => {
     const [hex, setHex] = createSignal<string>("#e8e4da")
+    const [trainNum, setTrainNum] = createSignal<number>(0)
+    const [tripple, setTripple] = createSignal<string>("")
     let pickerEl: HTMLButtonElement
     let resultEl: HTMLDivElement
     let hiddenEl: HTMLInputElement
-  
+
+    let trainEl: HTMLButtonElement
+
     const abortController = new AbortController()
 
     onMount(() => {
         initHtmx()
         hiddenEl.value = hex()
         pickerEl.addEventListener("click", handleColorPicker)
+        // trainEl.addEventListener("click", handleTrainModel)
         addEventListener("keydown", handleKeys)
     })
 
     const handleKeys = (e: KeyboardEvent) => {
-        if(e.key === "s") {
-           const icon = document.querySelector(".add-icon") as HTMLElement
-           if(!icon) return
-           icon.click()
-        } else if(e.key === "d") {
+        if (e.key === "s") {
+            const icon = document.querySelector(".add-icon") as HTMLElement
+            if (!icon) return
+            icon.click()
+        } else if (e.key === "d") {
             pickerEl.click()
         }
     }
@@ -57,6 +62,20 @@ const Chrome = () => {
         }
     }
 
+    const handleTrainModel = async () => {
+        await openColorPicker()
+    }
+
+    const openColorPicker = async () => {
+        const picker = new EyeDropper()
+        console.dir(picker)
+        const result = await picker.open()
+        const color = result.sRGBHex
+        hiddenEl.value = color
+        setHex(color)
+        window.htmx.trigger("#hidden-input", "send-color")
+    }
+
     const handleClick = (e: MouseEvent) => {
         const t = e.target as HTMLElement
         const icon = t.closest(".add-icon")
@@ -67,7 +86,7 @@ const Chrome = () => {
 
         const name = icon.parentElement.dataset.name
         const isWebtone = Boolean(icon.parentElement.dataset.webtone)
-  
+
         if (isWebtone) {
             addColorLS(getWebtone(name))
         } else {
@@ -93,6 +112,21 @@ const Chrome = () => {
                     </button>
                 </nav>
 
+                <Show when={false}>
+                    <nav class={cn("mt-28 flex w-full justify-center")}>
+                        <button
+                            id="start-button"
+                            ref={trainEl}
+                            class={cn(
+                                "relative h-12 min-w-44 border border-neutral-500 bg-neutral-800 uppercase transition-transform duration-100 hover:scale-[1.01]"
+                            )}
+                        >
+                            <span id="button-text" class="select-none text-base tracking-wide text-neutral-100">
+                                Train Model
+                            </span>
+                        </button>
+                    </nav>
+                </Show>
                 {/* <!-- Hidden input to handle color picker forwards to htmx--> */}
                 <input
                     id="hidden-input"
@@ -128,6 +162,7 @@ const Chrome = () => {
             addEventListener("htmx:beforeRequest", beforeRequest)
             addEventListener("htmx:configRequest", configRequest)
             addEventListener("htmx:afterSwap", afterSwap)
+            addEventListener("htmx:afterSettle", afterSettle)
 
             //window.htmx.trigger("#hidden-input", "send-color")
         }
@@ -137,6 +172,7 @@ const Chrome = () => {
             removeEventListener("htmx:beforeRequest", beforeRequest)
             removeEventListener("htmx:configRequest", configRequest)
             removeEventListener("htmx:afterSwap", afterSwap)
+            removeEventListener("htmx:afterSettle", afterSettle)
         }
 
         const configRequest = (evt: CustomEvent) => {
@@ -156,12 +192,47 @@ const Chrome = () => {
 
         const afterSwap = (evt: CustomEvent) => {
             resultEl.style.opacity = "1"
-
-            setTimeout(() => {
-                //setJsonData(window.jsonData)
-            }, 100)
-
             handleColor(hex(), true)
+        }
+
+        const afterSettle = async (evt: CustomEvent) => {
+            const p = window.jsonData.conversions.web
+
+            const h = p.hueClass
+            const s = p.shadeClass
+            const c = p.chromaClass
+
+            let neutral = null
+
+            if (h === 0 && s === 0 && c === 0) {
+                const numberRegex = /\d+/
+                const numberMatch = p.code.match(numberRegex)
+
+                if (numberMatch) {
+                    const extractedNumber = numberMatch[0] // Assuming there's only one number in the string
+                    const appendedNumber = `[-1,${extractedNumber},-1]`
+                    neutral = appendedNumber
+                } else {
+                    console.log("No number found in the input string.")
+                }
+            }
+
+            if (trainNum() == 0) {
+                setTrainNum((prev) => prev + 1)
+
+                neutral ? setTripple(`[${neutral},`) : setTripple(`[[${p.hueClass},${p.shadeClass},${p.chromaClass}],`)
+            } else if (trainNum() == 1) {
+                setTrainNum((prev) => prev + 1)
+                neutral
+                    ? setTripple((prev) => prev + `${neutral},`)
+                    : setTripple((prev) => prev + `[${p.hueClass},${p.shadeClass},${p.chromaClass}],`)
+            } else {
+                neutral
+                    ? setTripple((prev) => prev + `${neutral}]`)
+                    : setTripple((prev) => prev + `[${p.hueClass},${p.shadeClass},${p.chromaClass}]]`)
+                setTrainNum(0)
+                console.log(tripple())
+            }
         }
 
         return { initHtmx, cleanupHtmx }
@@ -169,5 +240,3 @@ const Chrome = () => {
 }
 
 export default Chrome
-
-

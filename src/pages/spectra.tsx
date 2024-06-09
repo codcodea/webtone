@@ -1,5 +1,4 @@
 import { For, createSignal, Show, createEffect, onMount } from "solid-js"
-
 import { getColorsState, handleClearAll } from "../lib/ls"
 
 import Oswald from "~/components/oswald"
@@ -11,7 +10,6 @@ import type { WebtoneItem } from "~/state/webtone"
 import { activeDotIndex, setActiveDotIndex } from "~/state/spectra"
 
 import { handleKeys, handleSelect } from "./handlers"
-
 import { session } from "~/lib/session"
 
 const Spectra = () => {
@@ -111,6 +109,10 @@ const Spectra = () => {
                         </button>
                     </div>
                 </section>
+                <section class="mt-12 flex flex-col items-center justify-center">
+                    <p class="text-sm italic">Click wheel dots to select a color slice.</p>
+                    <p class="text-sm italic">Below, click individual chip for details or the checkbox to add it to the Canvas.</p>
+                </section>
 
                 <section class="mt-12 flex w-full flex-col items-center justify-center">
                     <section class="w-11/12" data-palette={activeDotIndex()}>
@@ -122,7 +124,7 @@ const Spectra = () => {
                             class="my-2 flex flex-row flex-wrap items-center justify-center gap-x-1"
                         >
                             <For each={chips()[activeDotIndex()].arr}>
-                                {(chip, i) => <WebtoneChip chip={chip} index={i()} hasSelect={true}/>}
+                                {(chip, i) => <WebtoneChip chip={chip} index={i()} hasSelect={true} />}
                             </For>
                         </article>
                     </section>
@@ -130,15 +132,13 @@ const Spectra = () => {
 
                 <section class="mt-12 flex w-full flex-col items-center justify-center">
                     <section class="w-11/12" data-palette={40}>
-                        <h1 class="mb-6 mt-12 text-center text-2xl text-neutral-800">
-                            {chips()[40].name}
-                        </h1>
+                        <h1 class="mb-6 mt-12 text-center text-2xl text-neutral-800">{chips()[40].name}</h1>
                         <article
                             onClick={handleClick}
                             class="my-2 flex flex-row flex-wrap items-center justify-center gap-x-1"
                         >
                             <For each={chips()[40].arr}>
-                                {(chip, i) => <WebtoneChip chip={chip} index={i()} hasSelect={true}/>}
+                                {(chip, i) => <WebtoneChip chip={chip} index={i()} hasSelect={true} />}
                             </For>
                         </article>
                     </section>

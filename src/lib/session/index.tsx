@@ -15,6 +15,7 @@ class SessionMetrics {
 
     init() {
         lifecycle.addEventListener("statechange", this.handleLifeCycle)
+        //addEventListener("popstate", this.handleLifeCycle)
         addEventListener("beforeunload", this.handleLifeCycle)
         this.isDev = window.location.hostname === "localhost"
     }
@@ -22,18 +23,15 @@ class SessionMetrics {
     handleLifeCycle = (event: any) => {
         if (this.isDestroyed) return
 
-        if (event?.newState === "hidden") {
-            this.sendBeacon()
-            this.reset()
-        }
-
-        if (event?.newState === "terminated" || event?.newState === "discarded") {
-            this.sendBeacon()
-            this.isDestroyed = true
-        } else if (event?.type === "beforeunload") {
+        if (event?.type === "beforeunload") {
             // used for the page back button as popstate is not triggered
+            if (this.isDestroyed) return
             this.isDestroyed = true
             this.sendBeacon()
+        } else if (event?.newState === "terminated" || event?.newState === "discarded") {
+            if (this.isDestroyed) return
+            this.sendBeacon()
+            this.isDestroyed = true
         }
     }
 
@@ -41,7 +39,7 @@ class SessionMetrics {
         const obj = {
             lang: navigator.language,
             pages: this.pages,
-            actions : this.actions,
+            actions: this.actions,
         }
         const blob = new Blob([btoa(JSON.stringify(obj))], { type: "application/json" })
         navigator.sendBeacon(env.metrics, blob)

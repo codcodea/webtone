@@ -7,8 +7,10 @@ const Toolbar = () => {
     return (
         <div class="z-50 flex h-full w-full items-center  text-neutral-800">
             <div class="relative w-28 text-base">
-                <A class="ml-4" href="/">WEBTONE</A>
-                <div class="absolute left-0 -top-[4px] h-8 w-2 overflow-hidden">
+                <A class="ml-4" href="/">
+                    WEBTONE
+                </A>
+                <div class="absolute -top-[4px] left-0 h-8 w-2 overflow-hidden">
                     {/* <span class="absolute top-1 h-3 w-3 bg-[#ff7830] " />
                             <span class="absolute top-4 h-3 w-3 bg-[#1f1f1f] " /> */}
                     <span class="absolute top-1 h-[24px] w-3 bg-[#222222]" />
@@ -21,6 +23,9 @@ const Toolbar = () => {
                 <Show when={testBrowerCompability() && !isMobile()}>
                     <A href="/picker">Picker</A>
                 </Show>
+                <div class="">
+                    <A href="/inspiration">Inspiration</A>
+                </div>
                 <div class="relative">
                     <A href="/canvas">Canvas</A>
                     <Show when={getColorsState()?.length > 0}>
