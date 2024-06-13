@@ -62,6 +62,10 @@ const addColorLS = (obj: WebtoneItem) => {
     session.addAction("add")
 }
 
+const hasColor = (code: string) => {
+    return isSelectedState().has(code)
+}
+
 const clearColorsLS = () => {
     localStorage.removeItem("colors")
     setColorsState([])
@@ -126,5 +130,6 @@ export {
     setClones,
     handleClearAll,
     handleClearUnused,
+    hasColor,
 }
 export type { SavedColor, WebtoneItemClone }

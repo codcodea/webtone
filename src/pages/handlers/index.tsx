@@ -10,8 +10,6 @@ export function handleKeys(
 ) {
     const addKeys = () => {
         addEventListener("keydown", handleEscKey)
-        const root = document.getElementById("root")
-        root.style.filter = "blur(1.5px) grayscale(90%)"
         setTimeout(() => {
             addEventListener("click", handleClickOutside)
         }, 0)
@@ -20,39 +18,48 @@ export function handleKeys(
     const removeKeys = () => {
         removeEventListener("keydown", handleEscKey)
         removeEventListener("click", handleClickOutside)
-        document.getElementById("root").style.filter = "none"
     }
 
     const handleEscKey = (e: KeyboardEvent) => {
+        e.preventDefault(); // preventes underlying page from scrolling
+
         if (e.key === "Escape" || e.key === "Enter" || e.key === "Backspace") {
             setIsPortal(false)
-        } else if (e.key === "ArrowRight") {
-            const hue = active()?.hueClass
-            let index = Number(active()?.shadeClass - 1 + "" + active()?.chromaClass)
+            return
+        } 
 
+        const keys = ["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown"]
+        if (!keys.includes(e.key)) return
 
-          
-            if (index == 79)
-                index = 0
-            else
-                index++
+        const hue = active()?.hueClass
+        let index = Number(active()?.shadeClass - 1 + "" + active()?.chromaClass)
 
-            const newChip = chips()[hue].arr[index] as WebtoneItem
-            newChip.index = hue
-            setActive(newChip)
-        } else if (e.key === "ArrowLeft") {
-            const hue = active()?.hueClass
-            let index = Number(active()?.shadeClass - 1 + "" + active()?.chromaClass)
-           
-            if (index == 0)
-                index = 79
-            else 
-                index--
-
-            const newChip = chips()[hue].arr[index] as WebtoneItem
-            newChip.index = hue
-            setActive(newChip)
+        if (!hue || isNaN(index)) return // neutrals
+        
+        switch (e.key) {
+            case "ArrowRight":
+                if (index % 10 === 9) return
+                else index++
+                break
+            case "ArrowLeft":
+                if (index % 10 === 0) return
+                else index--
+                break
+            case "ArrowUp":
+                if(index < 10) return
+                index -= 10
+                Math.abs(index) % 80
+                break
+            case "ArrowDown":
+                if(index > 69) return // 
+                index += 10
+                index %= 80
+                break
         }
+
+        const newChip = chips()[hue].arr[index] as WebtoneItem
+        newChip.index = hue
+        setActive(newChip)
     }
 
     const handleClickOutside = (e: MouseEvent) => {

@@ -1,25 +1,32 @@
-import { Show, createSignal, onCleanup, onMount } from "solid-js"
+import { Show, createEffect, createSignal, onCleanup, onMount } from "solid-js"
 
-import Output from "../output"
+import PortalComponent from "~/components/portal"
+import { handleKeys } from "../handlers"
 
 import { cn } from "../../lib/merge"
 
 import { handleColor } from "~/handlers/color"
 import { addColorLS } from "~/lib/ls"
 import { env } from "~/lib/api"
-import { getWebtone } from "~/state/webtone"
+import { WebtoneItem, getWebtone } from "~/state/webtone"
 import { session } from "~/lib/session"
 
 // --------------------------------------------------------
-
-
 
 const Chrome = () => {
     const [hex, setHex] = createSignal<string>("#e8e4da")
     const [trainNum, setTrainNum] = createSignal<number>(0)
     const [tripple, setTripple] = createSignal<string>("")
-    const [palette, setPalette] = createSignal<number[][]>([[0, 0], [0, 0], [0, 0]])    
-    
+    const [palette, setPalette] = createSignal<number[][]>([
+        [0, 0],
+        [0, 0],
+        [0, 0],
+    ])
+
+    const [isPortal, setPortal] = createSignal(false)
+    const [active, setActive] = createSignal<WebtoneItem>()
+    const portal = createSignal<HTMLDivElement>()
+
     let pickerEl: HTMLButtonElement
     let resultEl: HTMLDivElement
     let hiddenEl: HTMLInputElement
@@ -29,15 +36,23 @@ const Chrome = () => {
 
     const abortController = new AbortController()
 
+    const { addKeys, removeKeys } = handleKeys(setPortal, active, setActive)
+
     onMount(() => {
         initHtmx()
         hiddenEl.value = hex()
         pickerEl.addEventListener("click", handleColorPicker)
         // trainEl.addEventListener("click", handleTrainModel)
-        addEventListener("keydown", handleKeys)
+
+        addEventListener("keydown", handlePickKeys)
+    
     })
 
-    const handleKeys = (e: KeyboardEvent) => {
+    createEffect(() => {
+        isPortal() ? addKeys() : removeKeys()
+    })
+
+    const handlePickKeys = (e: KeyboardEvent) => {
         if (e.key === "s") {
             const icon = document.querySelector(".add-icon") as HTMLElement
             if (!icon) return
@@ -86,7 +101,11 @@ const Chrome = () => {
     const handleClick = (e: MouseEvent) => {
         const t = e.target as HTMLElement
         const icon = t.closest(".add-icon")
-        if (!icon) return
+
+        if (!icon) {
+            setPortal(true)
+            return
+        }
 
         icon.classList.add("animate")
         setTimeout(() => icon.classList.remove("animate"), 210)
@@ -108,6 +127,7 @@ const Chrome = () => {
                 <nav class={cn("mt-28 flex w-full justify-center")}>
                     <button
                         id="start-button"
+                        title="Press 'd' to open, 's' to save, and escape to close."
                         ref={pickerEl}
                         class={cn(
                             "relative h-12 min-w-44 border border-neutral-500 bg-neutral-800 uppercase transition-transform duration-100 hover:scale-[1.01]"
@@ -156,10 +176,9 @@ const Chrome = () => {
                     </article>
                 </section>
 
-                {/* <section ref={paletteEl}>
-                  <Output palette={palette} />
-                </section> */}
-
+                <Show when={isPortal()}>
+                    <PortalComponent ref={portal} active={active} setPortal={setPortal} />
+                </Show>
             </main>
         </>
     )
@@ -246,6 +265,8 @@ const Chrome = () => {
                 //console.log(tripple())
             }
             //setPalette(window.jsonData.palette)
+            const webtone = getWebtone(p.code)
+            setActive(webtone)
         }
 
         return { initHtmx, cleanupHtmx }

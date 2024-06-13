@@ -9,6 +9,7 @@ import { chips } from "~/state/webtone"
 import type { WebtoneItem } from "~/state/webtone"
 import { activeDotIndex, setActiveDotIndex } from "~/state/spectra"
 
+
 import { handleKeys, handleSelect } from "./handlers"
 import { session } from "~/lib/session"
 
@@ -22,6 +23,7 @@ const Spectra = () => {
     const { addKeys, removeKeys } = handleKeys(setPortal, active, setActive)
 
     onMount(() => {
+        initWheel()
         session.addPage("ps")
     })
 
@@ -35,6 +37,11 @@ const Spectra = () => {
 
         isPortal() && session.addAction("po")
     })
+
+    const initWheel = () => {
+        const colors = getColorsState().map((c) => c.index).sort((a, b) => a - b)
+        if (colors.length) setActiveDotIndex(colors[0])
+    }
 
     const handleOswaldClick = (e: MouseEvent) => {
         const t = e.target as HTMLElement

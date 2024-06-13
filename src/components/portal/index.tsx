@@ -1,11 +1,12 @@
 import { Portal } from "solid-js/web"
 import { checkContrast } from "~/lib/contrast"
 import type { WebtoneItem } from "~/state/webtone"
-import { createEffect } from "solid-js"
-
 import { isContrastAcceptable } from "~/lib/contrast"
+import { addColorLS, hasColor, rmColorLS } from "~/lib/ls"
+import { getWebtone } from "~/state/webtone"
 
 import "./styles.css"
+import { onMount, onCleanup } from "solid-js"
 
 type PortalProps = {
     active: () => WebtoneItem
@@ -17,16 +18,26 @@ const PortalComponent = (props: PortalProps) => {
 
     const Content = () => {
         return (
-            <>
+            <div class="ml-16">
                 <p class="">{props.active().hex} </p>
                 <p class="">{props.active().rgbString}</p>
                 <p class="">{props.active().oklch}</p>
                 <p class="">{props.active().cmyk}</p>
                 <p class="">{props.active().hsl}</p>
                 <p class="">lum: {props.active().lum}</p>
-            </>
+            </div>
         )
     }
+
+    onMount(() => {
+        const bg = document.getElementById("root")
+        bg.style.filter = "blur(1.5px) grayscale(90%)"
+    })
+
+    onCleanup(() => {
+        const bg = document.getElementById("root")
+        bg.style.filter = "none"
+    })
 
     return (
         <Portal>
@@ -39,17 +50,37 @@ const PortalComponent = (props: PortalProps) => {
                 id="portal"
             >
                 <button
-                    class="absolute bottom-6 right-6 z-20 h-6 w-16 border-neutral-200 text-sm uppercase shadow"
+                    class="absolute bottom-6 right-6 z-20 h-6 w-16 border border-neutral-500 text-sm uppercase shadow outline-none hover:scale-[1.03]"
                     onClick={() => {
                         props.setPortal(false)
                     }}
                 >
-                    <span class="z-30 select-none border border-neutral-600 px-2 py-1 text-xs uppercase tracking-wide text-white opacity-100">
+                    <span class="z-30 select-none px-2 py-1 text-xs uppercase tracking-wide text-neutral-200 opacity-100">
                         Close
                     </span>
                 </button>
 
-                <div class={"flex items-center justify-center gap-12"}>
+                <button
+                    class="absolute bottom-6 right-24 z-20 h-6 border border-neutral-500 text-sm uppercase shadow w-16 outline-none hover:scale-[1.03]"
+                    onClick={(e) => {
+                        const t = e.target.closest("button")
+                        t.classList.add("button-add")
+                        t.addEventListener("animationend", () => {
+                            t.classList.remove("button-add")
+                        })
+
+                        if(!hasColor(props.active().code))
+                            addColorLS(getWebtone(props.active().code))
+                        else 
+                            rmColorLS(props.active().code)
+                    }}
+                >
+                    <span class="z-30 select-none px-1 py-1 text-xs uppercase tracking-wide text-neutral-200 opacity-100">
+                        {hasColor(props.active().code) ? "Remove" : "Add"}
+                    </span>
+                </button>
+
+                <div class="flex items-center justify-center  border-neutral-700">
                     <div class="flex h-72 w-72 flex-col">
                         <div
                             class="flex w-full flex-1 flex-col items-center justify-center p-1 text-neutral-900 lg:p-2"
@@ -72,7 +103,7 @@ const PortalComponent = (props: PortalProps) => {
                             <p class="">{props.active().code}</p>
                         </div>
                     </div>
-                    <div class="hidden text-xl text-neutral-500 lg:block">
+                    <div class="hidden text-xl text-neutral-500 lg:block w-[370px]">
                         <Content />
                     </div>
                 </div>

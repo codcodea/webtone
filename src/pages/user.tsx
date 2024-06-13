@@ -197,7 +197,7 @@ const User = () => {
                                 class="z-20 h-6 w-24 border border-neutral-800 text-sm uppercase shadow"
                                 onClick={handleTrash}
                             >
-                                <span class="z-30 select-none text-xs uppercase tracking-wide text-neutral-800 opacity-100 hover:shadow">
+                                <span title="shift-click remove unused" class="z-30 select-none text-xs uppercase tracking-wide text-neutral-800 opacity-100 hover:shadow">
                                     Clear
                                 </span>
                             </button>

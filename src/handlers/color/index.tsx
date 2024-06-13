@@ -12,13 +12,13 @@ const setEffects = (pickedColor: string, currentHue: string, isFirst: boolean): 
     if (pickedColor.startsWith("#")) pickedColor = pickedColor.substring(1)
 
     const text = textColor(pickedColor)
-    const baseColor = document.querySelector(".base-color") as HTMLElement
+   //const baseColor = document.querySelector(".base-color") as HTMLElement
     const webtoneColor = document.querySelector(".webtone-color") as HTMLElement
     //const palette = document.querySelectorAll(".palette") as NodeListOf<HTMLElement>
-    const addIcon = document.querySelectorAll(".add-icon") as NodeListOf<HTMLElement>
+    //const addIcon = document.querySelectorAll(".add-icon") as NodeListOf<HTMLElement>
     //const welcomecard = isFirst ? [] : (document.querySelectorAll('.welcomecard') as NodeListOf<HTMLElement>)
 
-    baseColor.style.color = text
+    //baseColor.style.color = text
     webtoneColor.style.color = text
 
     //addIcon.forEach((e) => (e.firstElementChild.style.color = text))
