@@ -19,6 +19,7 @@ const Toolbar = () => {
 
             <div class="flex flex-1 items-center justify-center gap-6 text-sm uppercase tracking-wide">
                 <A href="/">Home</A>
+                <A href="/faq">FAQ</A>
                 <A href="/spectra">Spectra</A>
                 <Show when={testBrowerCompability() && !isMobile()}>
                     <A href="/picker">Picker</A>

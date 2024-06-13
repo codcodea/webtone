@@ -15,10 +15,11 @@ import { session } from "~/lib/session"
 const Spectra = () => {
     let portal: HTMLDivElement
 
-    const [webtone, setWebtone] = createSignal<WebtoneItem>(null)
+    const [active, setActive] = createSignal<WebtoneItem>(null)
     const [isPortal, setPortal] = createSignal(false)
 
-    const handleClick = handleSelect(setWebtone, setPortal)
+    const handleClick = handleSelect(setActive, setPortal)
+    const { addKeys, removeKeys } = handleKeys(setPortal, active, setActive)
 
     onMount(() => {
         session.addPage("ps")
@@ -34,8 +35,6 @@ const Spectra = () => {
 
         isPortal() && session.addAction("po")
     })
-
-    const { addKeys, removeKeys } = handleKeys(setPortal)
 
     const handleOswaldClick = (e: MouseEvent) => {
         const t = e.target as HTMLElement
@@ -110,7 +109,7 @@ const Spectra = () => {
                     </div>
                 </section>
                 <section class="mt-12 flex flex-col items-center justify-center">
-                    <p class="text-sm italic">Click wheel dots to select a color slice.</p>
+                    <p class="text-sm italic">Click wheel the select a hue-family.</p>
                     <p class="text-sm italic">Below, click individual chip for details or the checkbox to add it to the Canvas.</p>
                 </section>
 
@@ -145,7 +144,7 @@ const Spectra = () => {
                 </section>
 
                 <Show when={isPortal()}>
-                    <PortalComponent ref={portal} active={webtone} setPortal={setPortal} />
+                    <PortalComponent ref={portal} active={active} setPortal={setPortal} />
                 </Show>
             </main>
             <footer class="h-96 w-full bg-white"></footer>

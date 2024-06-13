@@ -11,36 +11,11 @@ import redShift from "~/assets/image.png"
 
 const Match = () => {
     return (
-        <main class="container mx-auto mb-28 min-h-screen max-w-5xl">
-            <h1 class="mb-6 mt-12  text-3xl text-neutral-800">Common Recipes and Uses</h1>
+        <main class="container mx-auto mb-28 min-h-screen max-w-3xl">
+            <h1 class="mb-6 mt-12  text-3xl text-neutral-800">Inspiration</h1>
             <p>
-                This developing page showcases some common color palette techniques. WEBTONE, like any color system,
-                aims to unify design and color practices across digital and physical media. By standardizing color
-                communication WEBTONE aims to ensure reliable and precise color reproduction in professional design.
+               The page is intended to provide inspiration and guidance for using WEBTONE colors in design.
             </p>
-
-            <h1 class="mb-6 mt-12  text-2xl text-neutral-800">WEBTONE Label System</h1>
-            <p class="mb-2">WEBTONE uses a structured label system to identify colors:</p>
-
-            <div class="my-8">
-                <WebtoneChip chip={chips()[18].arr[62]} big={true} index={0} hasSelect={false} />
-            </div>
-
-            <ul class="space-y-4">
-                <li>
-                    <span class="font-bold">General Classification:</span> Each hue is categorized into one of Pale,
-                    Light, Soft, Bright, or Vivid chromas. Deeper shades are labeled as Muted or Deep.
-                </li>
-                <li>
-                    <span class="font-bold">Hue Family Name:</span> Each hue family is assigned a specific name, such as
-                    "B-1" for the first blue hues.
-                </li>
-                <li>
-                    <span class="font-bold">Color Code:</span> The color code consists of two digits. The first digit
-                    (1-8) indicates the shade, with 1 being the lightest and 8 the darkest. The second digit (1-8)
-                    indicates the saturation level, where 0 is least saturated and 8 is most saturated.
-                </li>
-            </ul>
 
             <h2 class="mb-4 mt-12 text-2xl text-neutral-800">Shades</h2>
             <p class="mb-2">
@@ -78,7 +53,7 @@ const Match = () => {
                 applied to any hue family. Below the hues are expressed in the hue-component of HSL.
             </p>
 
-            <img  src={green} class="w-[460px] object-cover border my-12" />
+            <img src={green} class="my-12 w-[460px] border object-cover" />
 
             <p class="my-2">
                 In WEBTONE, natural progression is achived by selecting colors from adjacent hues and adjusting
@@ -114,7 +89,7 @@ const Match = () => {
                 system.
             </p>
 
-            <img src={oranges} class="w-[460px] object-cover border my-12" />
+            <img src={oranges} class="my-12 w-[460px] border object-cover" />
             <section class="mt-4  flex gap-3">
                 <WebtoneChip chip={chips()[2].arr[39]} big={true} index={0} hasSelect={false} />
                 <WebtoneChip chip={chips()[4].arr[49]} big={true} index={0} hasSelect={false} />

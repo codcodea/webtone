@@ -1,4 +1,4 @@
-import webtone from "~/assets/webtones.json"
+import webtoneJson from "~/assets/webtones.json"
 import { createSignal } from "solid-js"
 
 // Redefine `Webtone` using `WebtoneItem`
@@ -10,28 +10,32 @@ type Webtone = {
 // Define a type for the `arr` field
 interface WebtoneChip {
     code: string
-    rgbString: string
     hex: string
+    rgbString: string
     oklch: string
     hsl: string
     cmyk: string
     lum: string
+    descriptor?: string
+    hueClass?: number
+    shadeClass?: number
+    chromaClass?: number
 }
 
 interface WebtoneItem extends WebtoneChip {
-    index: string
+        index: number
 }
 
-const [chips, setChips] = createSignal<Webtone>(webtone)
+const [chips, setChips] = createSignal<Webtone>(webtoneJson)
 
 const lookupWebtoneIndex = (code: string) => {
-    return chips().findIndex((chip) => chip.arr.some((item) => item.code === code.trim()))
+        return chips().findIndex((chip) => chip.arr.some((item) => item.code === code.trim()))
 }
 
 const getWebtone = (code: string): WebtoneItem => {
     const index = chips().findIndex((chip) => chip.arr.some((item) => item.code === code.trim()))
     const chip = chips()[index].arr.find((item) => item.code === code.trim()) as WebtoneItem
-    chip.index = index.toString()
+    chip.index = index
     return chip
 }
 

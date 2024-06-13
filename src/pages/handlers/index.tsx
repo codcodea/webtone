@@ -1,14 +1,17 @@
-import { Setter } from "solid-js"
+import { Setter, Accessor } from "solid-js"
 import { WebtoneItem, getWebtone } from "~/state/webtone"
 import { addColorLS, rmColorLS } from "~/lib/ls"
 import { chips } from "~/state/webtone"
 
-
-export function handleKeys(setIsPortal: Setter<boolean>) {
+export function handleKeys(
+    setIsPortal: Setter<boolean>,
+    active: Accessor<WebtoneItem>,
+    setActive: Setter<WebtoneItem>
+) {
     const addKeys = () => {
         addEventListener("keydown", handleEscKey)
         const root = document.getElementById("root")
-        root.style.filter = "blur(5px) grayscale(90%)"
+        root.style.filter = "blur(1.5px) grayscale(90%)"
         setTimeout(() => {
             addEventListener("click", handleClickOutside)
         }, 0)
@@ -23,12 +26,38 @@ export function handleKeys(setIsPortal: Setter<boolean>) {
     const handleEscKey = (e: KeyboardEvent) => {
         if (e.key === "Escape" || e.key === "Enter" || e.key === "Backspace") {
             setIsPortal(false)
+        } else if (e.key === "ArrowRight") {
+            const hue = active()?.hueClass
+            let index = Number(active()?.shadeClass - 1 + "" + active()?.chromaClass)
+
+
+          
+            if (index == 79)
+                index = 0
+            else
+                index++
+
+            const newChip = chips()[hue].arr[index] as WebtoneItem
+            newChip.index = hue
+            setActive(newChip)
+        } else if (e.key === "ArrowLeft") {
+            const hue = active()?.hueClass
+            let index = Number(active()?.shadeClass - 1 + "" + active()?.chromaClass)
+           
+            if (index == 0)
+                index = 79
+            else 
+                index--
+
+            const newChip = chips()[hue].arr[index] as WebtoneItem
+            newChip.index = hue
+            setActive(newChip)
         }
     }
 
     const handleClickOutside = (e: MouseEvent) => {
         const target = e.target as HTMLElement
-        const portal = document.getElementById("portal") 
+        const portal = document.getElementById("portal")
         if (target.closest("section") != portal) {
             setIsPortal(false)
         }
@@ -36,10 +65,8 @@ export function handleKeys(setIsPortal: Setter<boolean>) {
     return { addKeys, removeKeys }
 }
 
-
-export function handleSelect(setActive : Setter<WebtoneItem>, setPortal : Setter<boolean>) {
+export function handleSelect(setActive: Setter<WebtoneItem>, setPortal: Setter<boolean>) {
     return (e: MouseEvent) => {
-
         const target = e.target as HTMLInputElement
 
         const isCheckbox = target.tagName === "INPUT"
@@ -55,6 +82,8 @@ export function handleSelect(setActive : Setter<WebtoneItem>, setPortal : Setter
 
         const code = chip.getAttribute("data-webtone")
         const obj = chips()[palette].arr.find((chip) => chip.code == code)
+
+        if (!obj) return
 
         // Portal
         setActive(obj)

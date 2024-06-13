@@ -22,8 +22,7 @@ const Webtone = () => {
         isPortal() && session.addAction("po")
     })
 
-    const { addKeys, removeKeys } = handleKeys(setPortal)
-
+    const { addKeys, removeKeys } = handleKeys(setPortal, active, setActive)
     const handleClick = handleSelect(setActive, setPortal)
 
     return (

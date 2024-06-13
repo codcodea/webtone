@@ -1,5 +1,7 @@
 import { Show, createSignal, onCleanup, onMount } from "solid-js"
 
+import Output from "../output"
+
 import { cn } from "../../lib/merge"
 
 import { handleColor } from "~/handlers/color"
@@ -10,15 +12,20 @@ import { session } from "~/lib/session"
 
 // --------------------------------------------------------
 
+
+
 const Chrome = () => {
     const [hex, setHex] = createSignal<string>("#e8e4da")
     const [trainNum, setTrainNum] = createSignal<number>(0)
     const [tripple, setTripple] = createSignal<string>("")
+    const [palette, setPalette] = createSignal<number[][]>([[0, 0], [0, 0], [0, 0]])    
+    
     let pickerEl: HTMLButtonElement
     let resultEl: HTMLDivElement
     let hiddenEl: HTMLInputElement
 
     let trainEl: HTMLButtonElement
+    let paletteEl: HTMLDivElement
 
     const abortController = new AbortController()
 
@@ -148,6 +155,11 @@ const Chrome = () => {
                         {/* <!-- HTMx container --> */}
                     </article>
                 </section>
+
+                {/* <section ref={paletteEl}>
+                  <Output palette={palette} />
+                </section> */}
+
             </main>
         </>
     )
@@ -213,7 +225,7 @@ const Chrome = () => {
                     const appendedNumber = `[-1,${extractedNumber},-1]`
                     neutral = appendedNumber
                 } else {
-                    console.log("No number found in the input string.")
+                    //console.log("No number found in the input string.")
                 }
             }
 
@@ -231,8 +243,9 @@ const Chrome = () => {
                     ? setTripple((prev) => prev + `${neutral}]`)
                     : setTripple((prev) => prev + `[${p.hueClass},${p.shadeClass},${p.chromaClass}]]`)
                 setTrainNum(0)
-                console.log(tripple())
+                //console.log(tripple())
             }
+            //setPalette(window.jsonData.palette)
         }
 
         return { initHtmx, cleanupHtmx }

@@ -1,6 +1,7 @@
 import { Portal } from "solid-js/web"
 import { checkContrast } from "~/lib/contrast"
 import type { WebtoneItem } from "~/state/webtone"
+import { createEffect } from "solid-js"
 
 import { isContrastAcceptable } from "~/lib/contrast"
 
@@ -43,7 +44,9 @@ const PortalComponent = (props: PortalProps) => {
                         props.setPortal(false)
                     }}
                 >
-                    <span class="z-30 select-none text-xs uppercase tracking-wide text-white opacity-100 px-2 py-1 border border-neutral-600">Close</span>
+                    <span class="z-30 select-none border border-neutral-600 px-2 py-1 text-xs uppercase tracking-wide text-white opacity-100">
+                        Close
+                    </span>
                 </button>
 
                 <div class={"flex items-center justify-center gap-12"}>
