@@ -34,7 +34,7 @@ export function handleKeys(
         const hue = active()?.hueClass
         let index = Number(active()?.shadeClass - 1 + "" + active()?.chromaClass)
 
-        if (!hue || isNaN(index)) return // neutrals
+        if (hue == undefined || isNaN(index)) return // neutrals
         
         switch (e.key) {
             case "ArrowRight":

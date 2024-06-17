@@ -3,17 +3,19 @@ import { testBrowerCompability, isMobile } from "../../handlers/device"
 import { Show } from "solid-js"
 import { getColorsState } from "~/lib/ls"
 
+import { tooltips, setTooltips } from "~/state/tooltips"
+
 const Toolbar = () => {
     return (
         <div class="z-50 flex h-full w-full items-center  text-neutral-800">
-            <div class="relative w-28 text-base">
-                <A class="ml-4" href="/">
+            <div class="relative w-28 text-md">
+                <A class="ml-4 text-neutral-700" href="/">
                     WEBTONE
                 </A>
                 <div class="absolute -top-[4px] left-0 h-8 w-2 overflow-hidden">
                     {/* <span class="absolute top-1 h-3 w-3 bg-[#ff7830] " />
                             <span class="absolute top-4 h-3 w-3 bg-[#1f1f1f] " /> */}
-                    <span class="absolute top-1 h-[24px] w-3 bg-[#222222]" />
+                    <span class="absolute top-1 h-[24px] w-2 bg-[#505050]" />
                 </div>
             </div>
 
@@ -39,6 +41,12 @@ const Toolbar = () => {
             <div class="">
                 <button class="border border-neutral-500 px-3 py-1 text-xs uppercase tracking-wider text-neutral-800 hover:shadow">
                     <A href="/downloads">Assets</A>
+                </button>
+            </div>
+            <div class="">
+                <button class="ml-2 border border-neutral-500 px-3 py-1 text-xs uppercase tracking-wider text-neutral-800 hover:shadow"
+                onClick={() => setTooltips(!tooltips())} >
+                    Tooltips <span>{tooltips() ? "ON" : "OFF"}</span>
                 </button>
             </div>
         </div>

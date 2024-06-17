@@ -12,6 +12,8 @@ import { activeDotIndex, setActiveDotIndex } from "~/state/spectra"
 import { handleKeys, handleSelect } from "./handlers"
 import { session } from "~/lib/session"
 
+import { tooltips } from "~/state/tooltips"
+
 const Spectra = () => {
     let portal: HTMLDivElement
 
@@ -41,7 +43,7 @@ const Spectra = () => {
         const colors = getColorsState()
             .map((c) => c.index)
             .sort((a, b) => a - b)
-            
+
         const firstNonNeutral = colors.filter((c) => c > 40)
 
         if (firstNonNeutral.length) {
@@ -123,12 +125,32 @@ const Spectra = () => {
                         </button>
                     </div>
                 </section>
-                <section class="mt-12 flex flex-col items-center justify-center">
-                    <p class="text-sm italic">Click wheel the select a hue-family.</p>
-                    <p class="text-sm italic">
-                        Below, click individual chip for details or the checkbox to add it to the Canvas.
-                    </p>
-                </section>
+                <Show when={tooltips()}>
+                    <section class="mt-20 flex flex-col items-center justify-center">
+                        <article class="w-3/5 bg-neutral-100 px-10 py-6 text-neutral-800 shadow-md">
+                            <p class="my-2 text-base">The Spectra is used to filter and select colors.</p>
+                            <ul class="list-inside list-disc">
+                                <li class="">
+                                    <strong>Filter Hue:</strong> Select a dot on the wheel to filter by hue-family.
+                                </li>
+                                <li class="">
+                                    <strong>View Details:</strong> Click on a color to view conversion and contrast metrics.
+                                </li>
+                                <li class="">
+                                    <strong>Refine Selection:</strong> Use arrow keys in the details view to refine your
+                                    choice.
+                                </li>
+                                <li class="">
+                                    <strong>Save Color:</strong> Click the checkbox or ADD-button to save a color to the
+                                    canvas.
+                                </li>
+                                <li class="">
+                                    <strong>Reset Canvas:</strong> Click CLEAR to reset the Canvas.
+                                </li>
+                            </ul>
+                        </article>
+                    </section>
+                </Show>
 
                 <section class="mt-12 flex w-full flex-col items-center justify-center">
                     <section class="w-11/12" data-palette={activeDotIndex()}>

@@ -11,6 +11,8 @@ import { env } from "~/lib/api"
 import { WebtoneItem, getWebtone } from "~/state/webtone"
 import { session } from "~/lib/session"
 
+import { tooltips } from "~/state/tooltips"
+
 // --------------------------------------------------------
 
 const Chrome = () => {
@@ -45,7 +47,6 @@ const Chrome = () => {
         // trainEl.addEventListener("click", handleTrainModel)
 
         addEventListener("keydown", handlePickKeys)
-    
     })
 
     createEffect(() => {
@@ -164,6 +165,37 @@ const Chrome = () => {
                     type="hidden"
                     name="colors"
                 />
+
+                <Show when={tooltips()}>
+                    <article class="mt-20 w-full bg-neutral-50 px-10 py-8 text-neutral-800 shadow-md">
+                        <ul class="list-inside list-disc">
+                            <p class="my-2 text-base">
+                                The Color Picker allows the selecting and matching of WEBTONE colors from an image or
+                                other reference work.
+                            </p>
+                            <li class="text-base">
+                                <strong>Pick a Color:</strong> Use the color picker to reference any color on the screen, not just within
+                                the browser window.
+                            </li>
+                            <li class=""><strong>View Details:</strong> Click on a color to see more details.</li>
+                            <li class="">
+                                <strong>Add Color:</strong> Click the plus symbol or the ADD-button, to save the corresponding WEBTONE
+                                color to the canvas.
+                            </li>
+                            <li class="">
+                                <strong>Refine Selection:</strong> If needed use arrow keys inside the details view to refine the serach.
+                            </li>
+                            <li class="">
+                                <strong>Keyboard Shortcuts:</strong>{" "}
+                                <code class="rounded-md border border-neutral-500 px-2 py-1 text-xs">d</code> to open
+                                the picker.{" "}
+                                <code class="rounded-md border border-neutral-500 px-2 py-1 text-xs">s</code> to save.{" "}
+                                <code class="rounded-md border border-neutral-500 px-2 py-1 text-xs">esc</code> to
+                                abort.
+                            </li>
+                        </ul>
+                    </article>
+                </Show>
 
                 <section class="mt-12 flex min-h-96 w-full justify-center">
                     <article

@@ -55,7 +55,7 @@ const FAQ = () => {
                     A WEBTONE color is labled <i>a color</i> or <i>a chip</i>
                 </li>
                 <li>
-                    Each card is divided into seven categories: <i>Pale, Light, Soft, Bright, Vivid, Muted and Deep</i>
+                    Each hue is divided into seven categories: <i>Pale, Light, Soft, Bright, Vivid, Muted and Deep</i>
                 </li>
             </ul>
 
@@ -73,12 +73,12 @@ const FAQ = () => {
                     <li>
                         <span class="font-bold">General Classification:</span> A WEBTONE color starts with the general
                         classification to help identify its characteristic, which can be <i>Pale</i>, <i>Light</i>,{" "}
-                        <i>Soft</i>, <i>Bright</i>, or <i>Vivid</i> chromatics. Deeper shades are labeled as{" "}
+                        <i>Soft</i>, <i>Bright</i>, or <i>Vivid</i> chromatics. Deeper shades are labeled {" "}
                         <i>Muted</i> or <i>Deep</i>.
                     </li>
                     <li>
                         <span class="font-bold">Hue Family:</span> Each hue family is assigned a specific name, such as
-                        "B-1" for the first blue hues.
+                        "B-1" for the first blue hue.
                     </li>
                     <li>
                         <span class="font-bold">Color Code:</span> The color code consists of two digits. The first
@@ -87,6 +87,22 @@ const FAQ = () => {
                     </li>
                 </ul>
             </section>
+            <h1 class="mb-6 mt-12  text-3xl text-neutral-800">The Color Picker Tool</h1>
+            <p class="mb-4">
+                The color picker lets you referece any color one the screen. Click the plus symbol to add the
+                corresponding WEBTONE color to the canvas.
+            </p>
+            <p>
+                For qucik reference, the following keybord shortcuts are availible on the picker tab: <code class="border border-neutral-500 px-2 py-1">d</code> to open the picker.{" "}
+                <code class="border border-neutral-500 px-2 py-1">s</code> to save and{" "}
+                <code class="border border-neutral-500 px-2 py-1">esc</code> to abort.
+            </p>
+
+            <h1 class="mb-6 mt-12  text-3xl text-neutral-800">The Color Palette Tool</h1>
+            <p class="mb-4">
+                To quickly reference a color palette, add 2-6 colors to the canvas. Right-click to select the background
+                color. Click the button <i>PALETTE</i> when it appears on the canvas.
+            </p>
         </main>
     )
 }

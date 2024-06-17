@@ -17,6 +17,7 @@ import { cn } from "../lib/merge/index.ts"
 import { handlePaletteKeys } from "./handlers/index.tsx"
 
 import PatternPortal from "~/components/pattern/index.tsx"
+import { tooltips } from "~/state/tooltips.tsx"
 
 import {
     clearColorsLS,
@@ -249,12 +250,38 @@ const User = () => {
                                 </div>
                             </Show>
 
-                            <Show when={clones().length == 0 && cIds().length > 0}>
-                                <div class="absolute left-1/2 top-1/2 flex h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 transform flex-col items-center justify-center border border-dashed border-neutral-400 px-12 text-center text-2xl">
-                                    <p class="mb-2 text-xl text-neutral-800">Drop Zone</p>
-                                    <p class="text-lg text-neutral-600">Use handle ro resize and rearrange chips.</p>
-                                    <p class="text-lg text-neutral-600">Right-click for options (delete).</p>
-                                </div>
+                            <Show when={clones().length == 0 && cIds().length > 0 && tooltips()}>
+                                <section class="absolute left-1/2 top-1/2 mt-12 flex h-1/2 w-full -translate-x-1/2 -translate-y-1/2 transform flex-col items-center justify-center">
+                                    <article class="w-3/5 bg-neutral-50 px-10 py-8 text-neutral-800 shadow-md">
+                                        <p class="my-2 text-base">
+                                            The Canvas is a workspace for color matching and palette creation. Utilize
+                                            the Palette button for quick palette referencing when it appears.
+                                        </p>
+                                        <ul class="list-inside list-disc">
+                                            <li class="">
+                                                <strong>Add colors:</strong> Drag and drop colors onto the canvas.
+                                            </li>
+                                            <li class="">
+                                                <strong>Adjust:</strong> Drag and resize color chips as needed.
+                                            </li>
+                                            <li class="">
+                                                <strong>Options:</strong> Right-click a color for more options.
+                                            </li>
+                                            <li class="">
+                                                <strong>Clear Canvas:</strong> Click CLEAR to reset the canvas.
+                                                Shift-click to remove only unused colors.
+                                            </li>
+                                            <li class="">
+                                                <strong>Palette Button:</strong> Add 2-6 colors to enable the Palette
+                                                button.
+                                            </li>
+                                            <li class="">
+                                                <strong>Background Color:</strong> Right-click to select a palette
+                                                background color.
+                                            </li>
+                                        </ul>
+                                    </article>
+                                </section>
                             </Show>
                         </DropZone>
                     </section>
