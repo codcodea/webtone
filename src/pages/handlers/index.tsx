@@ -104,3 +104,35 @@ export function handleSelect(setActive: Setter<WebtoneItem>, setPortal: Setter<b
         }
     }
 }
+
+export function handlePaletteKeys(setIsPortal: Setter<boolean>) {
+    const addKeys = () => {
+        addEventListener("keydown", handleEscKey)
+        setTimeout(() => {
+            addEventListener("click", handleClickOutside)
+        }, 0)
+    }
+
+    const removeKeys = () => {
+        removeEventListener("keydown", handleEscKey)
+        removeEventListener("click", handleClickOutside)
+    }
+
+    const handleEscKey = (e: KeyboardEvent) => {
+        e.preventDefault(); // preventes underlying page from scrolling
+
+        if (e.key === "Escape" || e.key === "Enter" || e.key === "Backspace") {
+            setIsPortal(false)
+            return
+        } 
+    }
+
+    const handleClickOutside = (e: MouseEvent) => {
+        const target = e.target as HTMLElement
+        const portal = document.getElementById("patternPortal")
+        if (target.closest("section") != portal) {
+            setIsPortal(false)
+        }
+    }
+    return { addKeys, removeKeys }
+}

@@ -1,4 +1,4 @@
-import { children, createEffect, createSignal, Show } from "solid-js"
+import { createEffect, Show } from "solid-js"
 
 import {
     ContextMenu,
@@ -28,9 +28,12 @@ import {
     showLum,
     setShowLum,
 } from "~/state/contextmenu"
-import { isRightClick } from "~/state/contextmenu"
 
+import { isRightClick } from "~/state/contextmenu"
 import { session } from "~/lib/session"
+
+import { setClonePatternBackground, isClonePatternBackground } from "~/lib/ls"
+import { setLuminance } from "colorjs.io/fn"
 
 function ContextMenuDemo(props) {
     const handleZup = () => {
@@ -80,6 +83,9 @@ function ContextMenuDemo(props) {
                     </ContextMenuCheckboxItem>
                     <ContextMenuCheckboxItem checked={showLum()} onChange={setShowLum}>
                         Show Luminocity
+                    </ContextMenuCheckboxItem>
+                    <ContextMenuCheckboxItem checked={isClonePatternBackground(isRightClick())} onChange={() => setClonePatternBackground(isRightClick())}>
+                       Pattern Background
                     </ContextMenuCheckboxItem>
                 </ContextMenuContent>
             </ContextMenuPortal>

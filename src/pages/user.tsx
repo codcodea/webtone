@@ -14,6 +14,9 @@ import {
 
 import interact from "interactjs"
 import { cn } from "../lib/merge/index.ts"
+import { handlePaletteKeys } from "./handlers/index.tsx"
+
+import PatternPortal from "~/components/pattern/index.tsx"
 
 import {
     clearColorsLS,
@@ -25,7 +28,7 @@ import {
     isSelectedState,
     clones,
     setClones,
-    handleClearUnused
+    handleClearUnused,
 } from "../lib/ls/index.tsx"
 
 import { createEffect, createSignal, For, onMount, untrack, Show } from "solid-js"
@@ -37,7 +40,6 @@ import ContextMenuDemo from "../components/context/index.tsx"
 import { isRightClick, setIsRightClick, showColor, showName, showHex, showLum } from "../state/contextmenu"
 
 import { session } from "../lib/session/index.tsx"
-
 import { textColor } from "~/handlers/color/index.tsx"
 
 type Position = {
@@ -53,6 +55,8 @@ const cloneStyle = "absolute w-20 h-20 flex flex-col border-neutral-400 resizabl
 // --------------------------------------------------------
 
 const User = () => {
+    const [isPortal, setPortal] = createSignal(false)
+
     let leftColumn: HTMLDivElement
     let workarea: HTMLDivElement
 
@@ -73,7 +77,10 @@ const User = () => {
     createEffect(() => {
         addClonesLS(clones())
         saveColorSortLS(getColorsState())
+        isPortal() ? addKeys() : removeKeys()
     })
+
+    const { addKeys, removeKeys } = handlePaletteKeys(setPortal)
 
     // onDragEnd
     // - Clone the Sortable if over Droppable
@@ -90,8 +97,13 @@ const User = () => {
                     dy: overlayPos().y,
                     width: 220 + "px",
                     height: 220 + "px",
+                    isBackground: false,
                     ...draggable.data,
                 } as WebtoneItemClone
+
+                if (clones().length == 0) {
+                    clone.isBackground = true
+                }
 
                 setClones([...clones(), clone])
                 session.addAction("dr")
@@ -192,12 +204,34 @@ const User = () => {
                                 </div>
                             )}
                         </DragOverlay>
+                        <div
+                            class={cn(
+                                "absolute bottom-12 left-[5.5%] flex h-12 w-16 items-center justify-center transition-opacity duration-1000 ease-in-out",
+                                clones().length > 1 && clones().length < 6 ? "opacity-100" : "opacity-0"
+                            )}
+                        >
+                            <button
+                                class="z-20 h-6 w-24 border border-neutral-800 text-sm uppercase shadow"
+                                onClick={setPortal}
+                                disabled={clones().length < 2}
+                            >
+                                <span
+                                    title="drop at least two colors"
+                                    class="z-30 select-none text-xs uppercase tracking-wide text-neutral-800 opacity-100 hover:shadow"
+                                >
+                                    Pattern
+                                </span>
+                            </button>
+                        </div>
                         <div class="absolute bottom-4 left-[5.5%] flex h-12 w-16 items-center justify-center ">
                             <button
                                 class="z-20 h-6 w-24 border border-neutral-800 text-sm uppercase shadow"
                                 onClick={handleTrash}
                             >
-                                <span title="shift-click remove unused" class="z-30 select-none text-xs uppercase tracking-wide text-neutral-800 opacity-100 hover:shadow">
+                                <span
+                                    title="shift-click remove unused"
+                                    class="z-30 select-none text-xs uppercase tracking-wide text-neutral-800 opacity-100 hover:shadow"
+                                >
                                     Clear
                                 </span>
                             </button>
@@ -225,6 +259,10 @@ const User = () => {
                         </DropZone>
                     </section>
                 </DragDropProvider>
+
+                <Show when={isPortal()}>
+                    <PatternPortal setPortal={setPortal} />
+                </Show>
             </main>
         </>
     )

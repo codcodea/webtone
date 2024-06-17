@@ -9,7 +9,7 @@ type OutputProps = {
 const Output = (props : OutputProps) => {
  
     createEffect(() => {
-        console.log(props.palette())
+        //console.log(props.palette())
     })
 
     return (
@@ -26,9 +26,6 @@ type TrippleProps = {
 }
 
 const Tripple = (props: TrippleProps) => {
-
-    console.log("down", props.palette())
-
     if(props.palette() == null) return null
 
     return (

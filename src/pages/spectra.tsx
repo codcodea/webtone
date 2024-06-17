@@ -9,7 +9,6 @@ import { chips } from "~/state/webtone"
 import type { WebtoneItem } from "~/state/webtone"
 import { activeDotIndex, setActiveDotIndex } from "~/state/spectra"
 
-
 import { handleKeys, handleSelect } from "./handlers"
 import { session } from "~/lib/session"
 
@@ -39,8 +38,17 @@ const Spectra = () => {
     })
 
     const initWheel = () => {
-        const colors = getColorsState().map((c) => c.index).sort((a, b) => a - b)
-        if (colors.length) setActiveDotIndex(colors[0])
+        const colors = getColorsState()
+            .map((c) => c.index)
+            .sort((a, b) => a - b)
+            
+        const firstNonNeutral = colors.filter((c) => c > 40)
+
+        if (firstNonNeutral.length) {
+            setActiveDotIndex(firstNonNeutral[0])
+        } else {
+            setActiveDotIndex(0)
+        }
     }
 
     const handleOswaldClick = (e: MouseEvent) => {
@@ -117,7 +125,9 @@ const Spectra = () => {
                 </section>
                 <section class="mt-12 flex flex-col items-center justify-center">
                     <p class="text-sm italic">Click wheel the select a hue-family.</p>
-                    <p class="text-sm italic">Below, click individual chip for details or the checkbox to add it to the Canvas.</p>
+                    <p class="text-sm italic">
+                        Below, click individual chip for details or the checkbox to add it to the Canvas.
+                    </p>
                 </section>
 
                 <section class="mt-12 flex w-full flex-col items-center justify-center">

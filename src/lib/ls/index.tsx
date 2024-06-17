@@ -19,6 +19,7 @@ interface WebtoneItemClone extends WebtoneItem {
     dy: number
     width: string
     height: string
+    isBackground: boolean
 }
 
 type Selected = Set<string>
@@ -114,6 +115,24 @@ const handleClearUnused = () => {
     setIsSelectedState(new Set(colors.map((c) => c.code)))
 }
 
+
+const isClonePatternBackground = (id: string) => {
+    return clones().find((clone) => clone.id === id)?.isBackground
+}
+const setClonePatternBackground = (id: string) => {
+    setClones((prev) =>
+        prev.map((clone) => {
+            if (clone.id === id) {
+                clone.isBackground = !clone.isBackground
+            } else {
+                clone.isBackground = false
+            }
+            return clone
+        })
+    )
+    addClonesLS(clones())
+}
+
 export {
     addColorLS,
     rmColorLS,
@@ -131,5 +150,7 @@ export {
     handleClearAll,
     handleClearUnused,
     hasColor,
+    isClonePatternBackground,
+    setClonePatternBackground,
 }
 export type { SavedColor, WebtoneItemClone }
