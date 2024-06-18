@@ -110,6 +110,37 @@ const FAQ = () => {
                 Inside the Palette tool, click the <i>EXPORT</i> button to generate a design brief. The brief includes
                 the color codes and a preview of the color palette.
             </p>
+
+
+
+            <a
+                class="block text-blue-700"
+                href="../assets/briefs/webtone-brief-example-3.pdf"
+                download="webtone-brief-3.pdf"
+            >
+                Download PDF
+            </a>
+            <a
+                class="block text-blue-700"
+                href="../assets/briefs/webtone-brief-example-1.pdf"
+                download="webtone-brief-1.pdf"
+            >
+                Download PDF
+            </a>
+            <a
+                class="block text-blue-700"
+                href="../assets/briefs/webtone-brief-example-4.pdf"
+                download="webtone-brief-4.pdf"
+            >
+                Download PDF
+            </a>
+            <a
+                class="block text-blue-700"
+                href="../assets/briefs/webtone-brief-example-2.pdf"
+                download="webtone-brief-2.pdf"
+            >
+                Download PDF
+            </a>
         </main>
     )
 }
