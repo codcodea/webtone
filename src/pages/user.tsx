@@ -19,6 +19,9 @@ import { handlePaletteKeys } from "./handlers/index.tsx"
 import PatternPortal from "~/components/pattern/index.tsx"
 import { tooltips } from "~/state/tooltips.tsx"
 
+import html2pdf from "html2pdf.js"
+import PDF from "~/pages/pdf/index.tsx"
+
 import {
     clearColorsLS,
     getColorsState,
@@ -43,6 +46,7 @@ import { isRightClick, setIsRightClick, showColor, showName, showHex, showLum } 
 import { session } from "../lib/session/index.tsx"
 import { textColor } from "~/handlers/color/index.tsx"
 
+
 type Position = {
     x: number
     y: number
@@ -57,6 +61,7 @@ const cloneStyle = "absolute w-20 h-20 flex flex-col border-neutral-400 resizabl
 
 const User = () => {
     const [isPortal, setPortal] = createSignal(false)
+    const [isExport, setExport] = createSignal(false)
 
     let leftColumn: HTMLDivElement
     let workarea: HTMLDivElement
@@ -72,6 +77,7 @@ const User = () => {
     onMount(() => {
         setClones(getClonesLS())
         session.addPage("pu")
+        //handleGeneratePDF()
     })
 
     // Save state to local storage
@@ -79,6 +85,7 @@ const User = () => {
         addClonesLS(clones())
         saveColorSortLS(getColorsState())
         isPortal() ? addKeys() : removeKeys()
+        isExport() && handleGeneratePDF()
     })
 
     const { addKeys, removeKeys } = handlePaletteKeys(setPortal)
@@ -173,6 +180,37 @@ const User = () => {
         })
     }
 
+    const handleGeneratePDF = () => {
+        const opt = {
+            margin: 0,
+            filename: "myfile.pdf",
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 3 },
+            jsPDF: { 
+                unit: "mm", 
+                format: "a4", 
+                orientation: 
+                "portrait", 
+                precision: 32, 
+                compress: true
+            },
+        }
+
+        const element = document.getElementById("printPDF")
+        var worker = html2pdf();
+        worker.set(opt).from(element).toPdf().get('pdf').then(function (pdf) {
+            var totalPages = pdf.internal.getNumberOfPages();
+          
+            if (totalPages > 2) {
+                pdf.deletePage(3);
+            }
+            return pdf;
+        }).then(function (pdf) {
+            pdf.save("webtone.pdf");
+        }).then(() => setExport(false))
+    }
+
+
     return (
         <>
             <AltMain />
@@ -252,24 +290,24 @@ const User = () => {
 
                             <Show when={clones().length == 0 && cIds().length > 0 && tooltips()}>
                                 <section class="absolute left-1/2 top-1/2 mt-12 flex h-1/2 w-full -translate-x-1/2 -translate-y-1/2 transform flex-col items-center justify-center">
-                                    <article class="w-3/5 bg-neutral-50 px-10 py-8 text-neutral-800 shadow-md">
+                                    <article class="w-1/2 bg-neutral-50 px-10 py-8 text-neutral-800 shadow-md">
                                         <p class="my-2 text-base">
-                                            The Canvas is a workspace for color matching and palette creation. Utilize
-                                            the Palette button for quick palette referencing when it appears.
+                                            The Canvas is a workspace for color and palettes. Utilize the Palette button
+                                            for quick palette referencing when it appears.
                                         </p>
                                         <ul class="list-inside list-disc">
                                             <li class="">
-                                                <strong>Add colors:</strong> Drag and drop colors onto the canvas.
+                                                <strong>Add:</strong> Drag and drop color chip onto the canvas.
                                             </li>
                                             <li class="">
                                                 <strong>Adjust:</strong> Drag and resize color chips as needed.
                                             </li>
                                             <li class="">
-                                                <strong>Options:</strong> Right-click a color for more options.
+                                                <strong>Options:</strong> Right-click for options.
                                             </li>
                                             <li class="">
-                                                <strong>Clear Canvas:</strong> Click CLEAR to reset the canvas.
-                                                Shift-click to remove only unused colors.
+                                                <strong>Clear Canvas:</strong> Click CLEAR to reset. Shift-click to
+                                                remove unused colors only.
                                             </li>
                                             <li class="">
                                                 <strong>Palette Button:</strong> Add 2-6 colors to enable the Palette
@@ -288,9 +326,14 @@ const User = () => {
                 </DragDropProvider>
 
                 <Show when={isPortal()}>
-                    <PatternPortal setPortal={setPortal} />
+                    <PatternPortal setPortal={setPortal} setExport={setExport}/>
                 </Show>
             </main>
+            <section class="-z50 fixed">
+                <Show when={isPortal() && isExport()}>
+                    <PDF />
+                </Show>
+            </section>
         </>
     )
 }

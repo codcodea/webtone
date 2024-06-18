@@ -73,8 +73,8 @@ const FAQ = () => {
                     <li>
                         <span class="font-bold">General Classification:</span> A WEBTONE color starts with the general
                         classification to help identify its characteristic, which can be <i>Pale</i>, <i>Light</i>,{" "}
-                        <i>Soft</i>, <i>Bright</i>, or <i>Vivid</i> chromatics. Deeper shades are labeled {" "}
-                        <i>Muted</i> or <i>Deep</i>.
+                        <i>Soft</i>, <i>Bright</i>, or <i>Vivid</i> chromatics. Deeper shades are labeled <i>Muted</i>{" "}
+                        or <i>Deep</i>.
                     </li>
                     <li>
                         <span class="font-bold">Hue Family:</span> Each hue family is assigned a specific name, such as
@@ -93,7 +93,8 @@ const FAQ = () => {
                 corresponding WEBTONE color to the canvas.
             </p>
             <p>
-                For qucik reference, the following keybord shortcuts are availible on the picker tab: <code class="border border-neutral-500 px-2 py-1">d</code> to open the picker.{" "}
+                For qucik reference, the following keybord shortcuts are availible on the picker tab:{" "}
+                <code class="border border-neutral-500 px-2 py-1">d</code> to open the picker.{" "}
                 <code class="border border-neutral-500 px-2 py-1">s</code> to save and{" "}
                 <code class="border border-neutral-500 px-2 py-1">esc</code> to abort.
             </p>
@@ -102,6 +103,12 @@ const FAQ = () => {
             <p class="mb-4">
                 To quickly reference a color palette, add 2-6 colors to the canvas. Right-click to select the background
                 color. Click the button <i>PALETTE</i> when it appears on the canvas.
+            </p>
+
+            <h1 class="mb-6 mt-12  text-3xl text-neutral-800">Export Design Brief</h1>
+            <p class="mb-4">
+                Inside the Palette tool, click the <i>EXPORT</i> button to generate a design brief. The brief includes
+                the color codes and a preview of the color palette.
             </p>
         </main>
     )

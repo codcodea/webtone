@@ -131,18 +131,16 @@ const Spectra = () => {
                             <p class="my-2 text-base">The Spectra is used to filter and select colors.</p>
                             <ul class="list-inside list-disc">
                                 <li class="">
-                                    <strong>Filter Hue:</strong> Select a dot on the wheel to filter by hue-family.
+                                    <strong>Filter Hue:</strong> Select a dot on the color wheel to filter by hue-family.
                                 </li>
                                 <li class="">
-                                    <strong>View Details:</strong> Click on a color to view conversion and contrast metrics.
+                                    <strong>View Details:</strong> Click on a color for conversion and contrast metrics.
                                 </li>
                                 <li class="">
-                                    <strong>Refine Selection:</strong> Use arrow keys in the details view to refine your
-                                    choice.
+                                    <strong>Refine:</strong> Use arrow keys in the details view to refine.
                                 </li>
                                 <li class="">
-                                    <strong>Save Color:</strong> Click the checkbox or ADD-button to save a color to the
-                                    canvas.
+                                    <strong>Save Color:</strong> Click the checkbox or ADD-button to save.
                                 </li>
                                 <li class="">
                                     <strong>Reset Canvas:</strong> Click CLEAR to reset the Canvas.

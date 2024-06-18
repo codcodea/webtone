@@ -167,23 +167,21 @@ const Chrome = () => {
                 />
 
                 <Show when={tooltips()}>
-                    <article class="mt-20 w-full bg-neutral-50 px-10 py-8 text-neutral-800 shadow-md">
+                    <article class="mt-20 w-4/5 bg-neutral-50 px-10 py-8 text-neutral-800 shadow-md">
                         <ul class="list-inside list-disc">
                             <p class="my-2 text-base">
-                                The Color Picker allows the selecting and matching of WEBTONE colors from an image or
-                                other reference work.
+                                The Color Picker select and match WEBTONE colors from an image or reference.
                             </p>
                             <li class="text-base">
-                                <strong>Pick a Color:</strong> Use the color picker to reference any color on the screen, not just within
+                                <strong>Pick a Color:</strong> Pick any color on the screen, not just within
                                 the browser window.
                             </li>
-                            <li class=""><strong>View Details:</strong> Click on a color to see more details.</li>
+                            <li class=""><strong>View Details:</strong> Click color for details.</li>
                             <li class="">
-                                <strong>Add Color:</strong> Click the plus symbol or the ADD-button, to save the corresponding WEBTONE
-                                color to the canvas.
+                                <strong>Add Color:</strong> Click the plus symbol or the ADD-button to save.
                             </li>
                             <li class="">
-                                <strong>Refine Selection:</strong> If needed use arrow keys inside the details view to refine the serach.
+                                <strong>Refine:</strong> If needed, use arrow keys inside the details view to refine.
                             </li>
                             <li class="">
                                 <strong>Keyboard Shortcuts:</strong>{" "}
