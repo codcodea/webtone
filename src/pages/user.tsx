@@ -202,7 +202,9 @@ const User = () => {
 
         const element = document.getElementById("printPDF")
         var worker = html2pdf();
-        worker.set(opt).from(element).toPdf().save("webtone-" + randomStr + ".pdf");
+        worker.set(opt).from(element).toPdf().save("webtone-" + randomStr + ".pdf").then(() => {
+            setExport(false)
+        })
     }
 
 
@@ -321,7 +323,7 @@ const User = () => {
                 </DragDropProvider>
 
                 <Show when={isPortal()}>
-                    <PatternPortal setPortal={setPortal} setExport={setExport}/>
+                    <PatternPortal setPortal={setPortal} setExport={setExport} isExport={isExport}/>
                 </Show>
             </main>
             <section class="-z50 fixed">

@@ -111,20 +111,20 @@ const FAQ = () => {
                 the color codes and a preview of the color palette.
             </p>
 
-            <a class="block text-blue-700" href="../assets/briefs/webtone-ex-1.pdf" download="webtone-brief-1.pdf">
+            <a class="block text-blue-700" href="/briefs/webtone-ex-1.pdf" download="webtone-brief-1.pdf">
                 Download PDF
             </a>
-            <a class="block text-blue-700" href="../assets/briefs/webtone-ex-4.pdf" download="webtone-brief-4.pdf">
+            <a class="block text-blue-700" href="/briefs/webtone-ex-4.pdf" download="webtone-brief-4.pdf">
                 Download PDF
             </a>
-            <a class="block text-blue-700" href="../assets/briefs/webtone-ex-3.pdf" download="webtone-brief-3.pdf">
+            <a class="block text-blue-700" href="/briefs/webtone-ex-3.pdf" download="webtone-brief-3.pdf">
                 Download PDF
             </a>
-            <a class="block text-blue-700" href="../assets/briefs/webtone-ex-2.pdf" download="webtone-brief-2.pdf">
+            <a class="block text-blue-700" href="/briefs/webtone-ex-2.pdf" download="webtone-brief-2.pdf">
                 Download PDF
             </a>
 
-            <a class="block text-blue-700" href="../assets/briefs/webtone-ex-5.pdf" download="webtone-brief-5.pdf">
+            <a class="block text-blue-700" href="/briefs/webtone-ex-5.pdf" download="webtone-brief-5.pdf">
                 Download PDF
             </a>
         </main>

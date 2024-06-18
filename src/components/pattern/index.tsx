@@ -1,4 +1,4 @@
-import { Setter, createEffect } from "solid-js"
+import { Accessor, Setter, createEffect } from "solid-js"
 
 import { onMount, onCleanup } from "solid-js"
 import { Portal } from "solid-js/web"
@@ -8,13 +8,17 @@ import setPattern from "./setpattern"
 import { patternsAll, setPatternsAll, patternNo, setPatternNo, patternEl, setPatternEl } from "~/state/patterns"
 import { validSVGIndex } from "~/state/patterns"
 import { SelectSVGPattern } from "~/state/patterns"
+import { cn } from "~/lib/utils"
 
 type PatternPortalProps = {
     setPortal: Setter<boolean>
     setExport: Setter<boolean>
+    isExport: Accessor<boolean>
 }
 
 const PatternPortal = (props: PatternPortalProps) => {
+    let exportEl: HTMLButtonElement
+
     onMount(() => {
         const bg = document.getElementById("root")
         bg.style.filter = "blur(1.5px) grayscale(90%)"
@@ -45,10 +49,14 @@ const PatternPortal = (props: PatternPortalProps) => {
                 </div>
 
                 <button
-                    class="absolute bottom-4 right-52 z-20 h-6 w-16 border border-neutral-500 text-sm uppercase shadow outline-none hover:scale-[1.03]"
+                    class={cn(
+                        "absolute bottom-4 right-52 z-20 h-6 w-20 border-neutral-500 text-sm uppercase shadow outline-none hover:scale-[1.03]",
+                        props.isExport() ? "border-l-4" : "border"
+                    )}
                     onClick={() => {
                         props.setExport(true)
                     }}
+                    ref={exportEl}
                 >
                     <span class="z-30 select-none px-2 py-1 text-xs uppercase tracking-wide text-neutral-200 opacity-100">
                         Export
@@ -85,5 +93,3 @@ const PatternPortal = (props: PatternPortalProps) => {
 }
 
 export default PatternPortal
-
-

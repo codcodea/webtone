@@ -30,7 +30,7 @@ const PDF = () => {
                         <img src={webtone} alt="webtone" class="w-36 object-contain" />
                     </article>
                 </section>
-                <section class="grid h-[297mm] w-[210mm] grid-cols-12 border border-neutral-800">
+                <section class="grid h-[297mm] w-[210mm] grid-cols-12">
                     <article class="col-span-2">
                         <SelectSVGPattern setPatternEl={setLocalPatternEl2} isAbsolute={false} />
                     </article>
@@ -51,7 +51,7 @@ const PDF = () => {
                         </article>
                     </article>
                 </section>
-                <section class="grid h-[297mm] w-[210mm] grid-cols-12 border border-neutral-800">
+                <section class="grid h-[297mm] w-[210mm] grid-cols-12">
                     <article class="col-span-2">
                         <SelectSVGPattern setPatternEl={setLocalPatternEl3} isAbsolute={false} />
                     </article>
