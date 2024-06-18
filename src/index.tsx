@@ -12,6 +12,7 @@ const DownloadsPage = lazy(() => import("./pages/downloads"))
 const Picker = lazy(() => import("./pages/picker"))
 const Match = lazy(() => import("./pages/matching"))
 import FAQ from "./pages/faq"
+import PDF from "./pages/pdf"
 
 import "./lib/session"
 
@@ -26,6 +27,7 @@ render(
             <Route path="/downloads" component={DownloadsPage} />
             <Route path="/inspiration" component={Match} />
             <Route path="/faq" component={FAQ} />
+            <Route path="/pdf" component={PDF} />
             {/* <Route path="/pdf" component={PDF} /> */}
         </Router>
     ),

@@ -181,6 +181,10 @@ const User = () => {
     }
 
     const handleGeneratePDF = () => {
+
+        // Generate 2 random numbers 001-999
+        const random = Math.floor(Math.random() * 999) + 1
+        const randomStr = random.toString().padStart(3, "0")
         const opt = {
             margin: 0,
             filename: "myfile.pdf",
@@ -198,16 +202,7 @@ const User = () => {
 
         const element = document.getElementById("printPDF")
         var worker = html2pdf();
-        worker.set(opt).from(element).toPdf().get('pdf').then(function (pdf) {
-            var totalPages = pdf.internal.getNumberOfPages();
-          
-            if (totalPages > 2) {
-                pdf.deletePage(3);
-            }
-            return pdf;
-        }).then(function (pdf) {
-            pdf.save("webtone.pdf");
-        }).then(() => setExport(false))
+        worker.set(opt).from(element).toPdf().save("webtone-" + randomStr + ".pdf");
     }
 
 

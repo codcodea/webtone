@@ -4,12 +4,12 @@ import type { WebtoneItem } from "~/state/webtone"
 import { isContrastAcceptable } from "~/lib/contrast"
 import { addColorLS, hasColor, rmColorLS } from "~/lib/ls"
 import { getWebtone } from "~/state/webtone"
-import { Accessor, Setter } from "solid-js"
 
 import { cn } from "~/lib/merge"
 
 import "./styles.css"
-import { onMount, onCleanup } from "solid-js"
+import { onMount, onCleanup, createSignal, createEffect, Accessor, Setter } from "solid-js"
+
 
 type PortalProps = {
     active: Accessor<WebtoneItem>
@@ -18,8 +18,6 @@ type PortalProps = {
 }
 
 const PortalComponent = (props: PortalProps) => {
-    const [fgb, fgw, bgb, bgw] = isContrastAcceptable(props.active().rgbString)
-
     onMount(() => {
         const bg = document.getElementById("root")
         bg.style.filter = "blur(1.5px) grayscale(90%)"
@@ -29,8 +27,6 @@ const PortalComponent = (props: PortalProps) => {
         const bg = document.getElementById("root")
         bg.style.filter = "none"
     })
-
- 
 
     return (
         <Portal>
@@ -71,50 +67,7 @@ const PortalComponent = (props: PortalProps) => {
                     </span>
                 </button>
                 <WebtoneChip active={props.active} />
-
-                <div class="mt-20 flex w-3/4 flex-wrap items-center justify-center gap-4">
-                    <div
-                        class="flex h-12 w-24 items-center justify-center border border-neutral-800"
-                        style={{
-                            "background-color": props.active().rgbString,
-                            color: "black",
-                        }}
-                    >
-                        Text
-                        <input class="portal-checkbox" type="checkbox" checked={fgb} />
-                    </div>
-                    <div
-                        class="flex h-12 w-24 items-center justify-center border border-neutral-800"
-                        style={{
-                            "background-color": props.active().rgbString,
-                            color: "white",
-                        }}
-                    >
-                        Text
-                        <input class="portal-checkbox" type="checkbox" checked={fgw} />
-                    </div>
-
-                    <div
-                        class="flex h-12 w-24 items-center justify-center border border-neutral-800"
-                        style={{
-                            "background-color": "black",
-                            color: props.active().rgbString,
-                        }}
-                    >
-                        Text
-                        <input class="portal-checkbox" type="checkbox" checked={bgb} />
-                    </div>
-                    <div
-                        class="flex h-12 w-24 items-center justify-center border border-neutral-800"
-                        style={{
-                            "background-color": "white",
-                            color: props.active().rgbString,
-                        }}
-                    >
-                        Text
-                        <input class="portal-checkbox" type="checkbox" checked={bgw} />
-                    </div>
-                </div>
+                <Contrast active={props.active} />
             </section>
         </Portal>
     )
@@ -125,7 +78,7 @@ export default PortalComponent
 export const WebtoneChip = (props: PortalProps) => {
     const cardStyle = props.isSmall ? "w-40" : "w-72"
     const textStyle = props.isSmall ? "text-xs p-2" : "text-base px-6 py-3"
-    
+
     return (
         <div class="flex items-center justify-center">
             <div class={cn("flex aspect-square flex-col border border-neutral-300", cardStyle)}>
@@ -146,21 +99,26 @@ export const WebtoneChip = (props: PortalProps) => {
                     </div>
                 </div>
                 <div
-                    class={cn("flex h-1/4 w-full flex-col justify-center items-start bg-white text-neutral-900 relative", textStyle)}
+                    class={cn(
+                        "relative flex h-1/4 w-full flex-col items-start justify-center bg-white text-neutral-900",
+                        textStyle
+                    )}
                 >
                     {/* Hack to get the PDF to render correctly */}
-                    <div style={{
-                        position: props.isSmall ? "absolute" : "relative",
-                        top: props.isSmall ? "-2px" : "",
-                    }}>
-                    <p class="tracking-wide">WEBTONE</p>
-                    <p class="">{props.active().code}</p>
+                    <div
+                        style={{
+                            position: props.isSmall ? "absolute" : "relative",
+                            top: props.isSmall ? "-2px" : "",
+                        }}
+                    >
+                        <p class="tracking-wide">WEBTONE</p>
+                        <p class="">{props.active().code}</p>
                     </div>
                 </div>
             </div>
             <div
                 class={cn(
-                    "hidden w-[370px] text-xl lg:block",
+                    "hidden w-[370px] text-xl lg:block relative",
                     props.isSmall ? `text-[${checkContrast(props.active().hex)}]` : "text-neutral-500"
                 )}
             >
@@ -171,7 +129,7 @@ export const WebtoneChip = (props: PortalProps) => {
 }
 
 const WebtoneDetails = (props: PortalProps) => {
-    const cardStyle = props.isSmall ? "text-sm ml-8" : "lg:ml-16"
+    const cardStyle = props.isSmall ? "text-sm ml-8 absolute -top-[70px]" : "lg:ml-16"
     return (
         <div class={cn("", cardStyle)}>
             <p class="">{props.active().hex} </p>
@@ -180,6 +138,70 @@ const WebtoneDetails = (props: PortalProps) => {
             <p class="">{props.active().cmyk}</p>
             <p class="">{props.active().hsl}</p>
             <p class="">lum: {props.active().lum}</p>
+        </div>
+    )
+}
+
+export const Contrast = (props: PortalProps) => {
+
+    const [contrast, setContrast] = createSignal(isContrastAcceptable(props.active().rgbString))
+  
+    const fgb = () => contrast()[0]
+    const fgw = () => contrast()[1]
+    const bgb = () => contrast()[2]
+    const bgw = () => contrast()[3]
+
+    createEffect(() => {
+        setContrast(isContrastAcceptable(props.active().rgbString))
+    })
+
+    const width = props.isSmall ? "w-full" : "w-3/4"
+    const justify = props.isSmall ? "justify-start my-4" : "justify-center mt-20"
+
+    return (
+        <section class={cn("flex w-3/4 flex-wrap items-center justify-center gap-4", width, justify)}>
+            <TextBox active={props.active} isBlack={true} isBackground={true} isSmall={props.isSmall} okContrast={fgb()} />
+            <TextBox active={props.active} isBlack={false} isBackground={true} isSmall={props.isSmall} okContrast={fgw()} />
+            <TextBox active={props.active} isBlack={true} isBackground={false} isSmall={props.isSmall} okContrast={bgb()} />
+            <TextBox active={props.active} isBlack={false} isBackground={false} isSmall={props.isSmall} okContrast={bgw()} />
+        </section>
+    )
+}
+
+type TextBoxProps = {
+    active: Accessor<WebtoneItem>
+    isBackground: boolean
+    isBlack: boolean
+    isSmall?: boolean
+    okContrast: boolean
+}
+
+// Testing color as background with black and white text
+// Testis color as text on black and white background
+// isSmall is for the PDF that needs special handling for proper rendering
+const TextBox = (props : TextBoxProps) => {
+    return (
+        <div
+            class="relative flex h-12 w-24 items-center justify-center"
+            style={{
+                "background-color": props.isBackground ? props.active().rgbString : props.isBlack ? "black" : "white",
+                color:  props.isBackground ? props.isBlack ? "black" : "white" : props.active().rgbString,
+                "border-width": "1px",
+                "border-color": props.active().rgbString,
+                "border-style": "solid",
+            }}
+        >
+            <p
+                style={{
+                    position: props.isSmall ? "absolute" : "relative",
+                    top: props.isSmall ? "2px" : "",
+                    left: props.isSmall ? "20px" : "",
+                }}
+            >
+                Text
+            </p>
+            <span class="absolute -top-[12px] right-[14px] text-3xl">{props.isSmall && (props.okContrast ? "☑" : "☐")}</span>
+            {!props.isSmall && <input class="portal-checkbox" type="checkbox" checked={props.okContrast} />}
         </div>
     )
 }

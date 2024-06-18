@@ -105,40 +105,26 @@ const FAQ = () => {
                 color. Click the button <i>PALETTE</i> when it appears on the canvas.
             </p>
 
-            <h1 class="mb-6 mt-12  text-3xl text-neutral-800">Export Design Brief</h1>
+            <h1 class="mb-6 mt-12  text-3xl text-neutral-800">Create Design Brief</h1>
             <p class="mb-4">
                 Inside the Palette tool, click the <i>EXPORT</i> button to generate a design brief. The brief includes
                 the color codes and a preview of the color palette.
             </p>
 
+            <a class="block text-blue-700" href="../assets/briefs/webtone-ex-1.pdf" download="webtone-brief-1.pdf">
+                Download PDF
+            </a>
+            <a class="block text-blue-700" href="../assets/briefs/webtone-ex-4.pdf" download="webtone-brief-4.pdf">
+                Download PDF
+            </a>
+            <a class="block text-blue-700" href="../assets/briefs/webtone-ex-3.pdf" download="webtone-brief-3.pdf">
+                Download PDF
+            </a>
+            <a class="block text-blue-700" href="../assets/briefs/webtone-ex-2.pdf" download="webtone-brief-2.pdf">
+                Download PDF
+            </a>
 
-
-            <a
-                class="block text-blue-700"
-                href="../assets/briefs/webtone-brief-example-3.pdf"
-                download="webtone-brief-3.pdf"
-            >
-                Download PDF
-            </a>
-            <a
-                class="block text-blue-700"
-                href="../assets/briefs/webtone-brief-example-1.pdf"
-                download="webtone-brief-1.pdf"
-            >
-                Download PDF
-            </a>
-            <a
-                class="block text-blue-700"
-                href="../assets/briefs/webtone-brief-example-4.pdf"
-                download="webtone-brief-4.pdf"
-            >
-                Download PDF
-            </a>
-            <a
-                class="block text-blue-700"
-                href="../assets/briefs/webtone-brief-example-2.pdf"
-                download="webtone-brief-2.pdf"
-            >
+            <a class="block text-blue-700" href="../assets/briefs/webtone-ex-5.pdf" download="webtone-brief-5.pdf">
                 Download PDF
             </a>
         </main>

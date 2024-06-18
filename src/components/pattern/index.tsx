@@ -19,7 +19,6 @@ const PatternPortal = (props: PatternPortalProps) => {
         const bg = document.getElementById("root")
         bg.style.filter = "blur(1.5px) grayscale(90%)"
         setPattern(patternEl(), clones())
-        console.log(clones())
     })
 
     onCleanup(() => {

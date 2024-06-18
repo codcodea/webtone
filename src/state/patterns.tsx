@@ -26,7 +26,6 @@ export function validSVGIndex(clones: number): number[] {
     } else {
         components.push(5, 7, 8, 9)
     }
-    console.log(components.flat())
     return components.flat()
 }
 
@@ -36,7 +35,6 @@ type SelectSVGPatternProps = {
 }
 
 export const SelectSVGPattern = (props: SelectSVGPatternProps) => {
-    console.log(patternNo())
     return (
         <Switch>
             <Match when={patternNo() == 0}>{<Zebra ref={props.setPatternEl} isAbsolute={props.isAbsolute} />}</Match>
